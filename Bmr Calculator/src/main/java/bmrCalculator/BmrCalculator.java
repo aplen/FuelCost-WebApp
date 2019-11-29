@@ -1,3 +1,4 @@
+package bmrCalculator;
 enum Activity{
 	NONE(1.2,"brak aktywnoœci, praca siedz¹ca"),
 	LOW(1.4,"niska aktywnoœæ (praca siedz¹ca i 1-2 treningi w tygodniu)"),
