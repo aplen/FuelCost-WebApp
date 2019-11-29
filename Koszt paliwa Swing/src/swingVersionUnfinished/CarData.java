@@ -1,4 +1,4 @@
-package secondVersion;
+package swingVersionUnfinished;
 public class CarData  {
 	
 	private double lpgOn100km, lpgPrice, kmOnLPG, pb95On100km, pb95Price, kmOnPB95, result;
