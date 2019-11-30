@@ -1,4 +1,5 @@
 package swingVersion;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -227,7 +228,9 @@ public class AppFrame extends JFrame implements FocusListener, Consumptiable {
 	}
 
 	private void saveToDB() {// zapis do bazy danych
-		try (Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/D:/Databases/Baza Adama",
+		
+	    try (
+			Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/D:/Databases/Baza Adama",
 				"Adam", "1234")) {
 			Statement mkTable = conn.createStatement();
 			mkTable.executeUpdate(
@@ -258,6 +261,7 @@ public class AppFrame extends JFrame implements FocusListener, Consumptiable {
 	}
 
 	private void readFromDB() {
+	    
 		try (Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/D:/Databases/Baza Adama",
 				"Adam", "1234"); PreparedStatement upTable = conn.prepareStatement("SELECT*FROM ADAM.CARDATA")) {
 			ResultSet result = upTable.executeQuery();

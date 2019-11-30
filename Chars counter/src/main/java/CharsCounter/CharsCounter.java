@@ -1,8 +1,9 @@
+package CharsCounter;
 import java.util.Arrays;
 
-public class CharCounter {
+public class CharsCounter {
     public static void main(String[] args) {
-	String a = "";
+	String a = "asksadnfskvbcxkvbslkdns¿¿¹¹¹œ¹œœ";
 	System.out.println("Czêstotliwoœæ wystêpowania znaków w ci¹gu: " + a);
 
 	char[] chars = new char[a.length()];
