@@ -1,4 +1,4 @@
-package application;
+
 	
 import java.io.IOException;
 
@@ -11,7 +11,7 @@ public class Main extends Application {
     @Override
 	public void start(Stage primaryStage) throws Exception {
 	    FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(this.getClass().getResource("/view/MainView.FXML"));
+		loader.setLocation(this.getClass().getResource("/MainView.FXML"));
 		AnchorPane root = loader.load();
 		
 	
