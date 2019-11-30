@@ -3,8 +3,8 @@ import java.util.Arrays;
 
 public class CharsCounter {
     public static void main(String[] args) {
-	String a = "asksadnfskvbcxkvbslkdns¿¿¹¹¹œ¹œœ";
-	System.out.println("Czêstotliwoœæ wystêpowania znaków w ci¹gu: " + a);
+	String a = "asksadnfskvbcxkvbslk";
+	System.out.println("CzÄ™stotliwoÅ›Ä‡ wystÄ™powania znakÃ³w w ciÄ…gu: " + a);
 
 	char[] chars = new char[a.length()];
 	a.getChars(0, a.length(), chars, 0);
@@ -20,9 +20,9 @@ public class CharsCounter {
 		areTheSame = (chars[i] == chars[i - 1]);
 		if (areTheSame) {
 
-		    System.out.println(chars[i] + " wystêpuje " + count + " razy.");
+		    System.out.println(chars[i] + " wystÄ™puje " + count + " razy.");
 		} else {
-		    System.out.println(chars[i] + " wystêpuje 1 raz.");
+		    System.out.println(chars[i] + " wystÄ™puje 1 raz.");
 		}
 		break;
 
@@ -32,7 +32,7 @@ public class CharsCounter {
 		if (areTheSame)
 		    count++;
 		else {
-		    System.out.println(chars[i] + " wystêpuje " + count + " razy.");
+		    System.out.println(chars[i] + " wystÄ™puje " + count + " razy.");
 		    count = 1;
 		}
 	    }
