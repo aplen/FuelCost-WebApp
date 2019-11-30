@@ -5,7 +5,7 @@
   <version>0.0.1-SNAPSHOT</version>
 
   <dependencies>
- <!-- https://mvnrepository.com/artifact/org.apache.derby/derby -->
+<!-- https://mvnrepository.com/artifact/org.apache.derby/derby -->
 <dependency>
     <groupId>org.apache.derby</groupId>
     <artifactId>derby</artifactId>
@@ -29,8 +29,6 @@
     <artifactId>derbyLocale_pl</artifactId>
     <version>10.14.2.0</version>
 </dependency>
- 
-
 
   </dependencies>
     <build>
