@@ -7,4 +7,5 @@ package consoleVersion;
 public interface CostCalculator {
 
     double calculateCost();
+
 }

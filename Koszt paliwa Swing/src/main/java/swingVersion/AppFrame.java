@@ -30,7 +30,7 @@ import javax.swing.WindowConstants;
 
 import consoleVersion.CostCalculator;
 
-public class AppFrame extends JFrame implements FocusListener, CostCalculator {
+public class AppFrame extends JFrame implements FocusListener{
 
 	private static final long serialVersionUID = 1L;
 	private JTextField lpgOn100km, lpgPrice, kmOnLPG, pb95On100km, pb95Price, kmOnPB95, solution;
@@ -202,7 +202,6 @@ public class AppFrame extends JFrame implements FocusListener, CostCalculator {
 
 	}
 
-	@Override
 	public double calculateCost() {// obliczanie wyniku
 		dsolution = (Math.round(
 				(dlpgOn100km * dlpgPrice * dkmOnLPG / 100 + dpb95On100km * dpb95Price * dkmOnPB95 / 100) * 1000.0))
