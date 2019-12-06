@@ -1,22 +1,15 @@
 package consoleVersion;
 
-public class FuelCost implements CostCalculator  {
+public class FuelCost implements FuelCostCalculator  {
 
     
-    public  double calculateCost() {
+    public  double calculateFuelCost() {
 	return (Math.round((lpgOn100km * lpgPrice * kmOnLPG / 100 + pb95On100km * pb95Price * kmOnPB95 / 100) * 1000.0))
 		/ 1000.0;
     }
 
-    private double lpgOn100km, lpgPrice, kmOnLPG, pb95On100km, pb95Price, kmOnPB95, cost;
+    private double lpgOn100km, lpgPrice, kmOnLPG, pb95On100km, pb95Price, kmOnPB95;
 
-    public double getCost() {
-        return cost;
-    }
-
-    public void setCost(double cost) {
-        this.cost = cost;
-    }
 
     public double getLpgOn100km() {
         return lpgOn100km;

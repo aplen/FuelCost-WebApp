@@ -1,10 +1,9 @@
 package consoleVersion;
 
-import java.awt.Cursor;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class ConsoleData {
+public class ConsoleReader {
 
     static void retrieveData() {
 	Scanner scan = new Scanner(System.in);
@@ -30,10 +29,9 @@ public class ConsoleData {
 		System.out.print("Ile km przejedziesz na benzynie?");
 		fuelCost.setKmOnPB95(scan.nextDouble());
 
-		cost = fuelCost.calculateCost();
+		cost = fuelCost.calculateFuelCost();
 		if (cost < 0)
 		    throw new InputMismatchException();
-		fuelCost.setCost(cost);
 		isNotCorrect = false;
 	    } catch (InputMismatchException e) {
 

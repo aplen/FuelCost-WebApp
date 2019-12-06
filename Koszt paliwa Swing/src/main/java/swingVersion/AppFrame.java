@@ -28,7 +28,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-import consoleVersion.CostCalculator;
+import consoleVersion.FuelCostCalculator;
 
 public class AppFrame extends JFrame implements FocusListener{
 
