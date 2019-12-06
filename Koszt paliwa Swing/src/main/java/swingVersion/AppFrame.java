@@ -28,11 +28,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-public class AppFrame extends JFrame implements FocusListener, Consumptiable {
+import consoleVersion.CostCalculator;
+
+public class AppFrame extends JFrame implements FocusListener, CostCalculator {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField lpgOn100km, lpgPrice, kmOnLPG, pb95On100km, pb95Price, kmOnPB95, solution;
-	private double dlpgOn100km, dlpgPrice, dkmOnLPG, dpb95On100km, dpb95Price, dkmOnPB95;
+	private double dlpgOn100km, dlpgPrice, dkmOnLPG, dpb95On100km, dpb95Price, dkmOnPB95, dsolution;
 	private JLabel title, title1, lpgOn100kmDesc, lpgPriceDesc, kmOnLPGDesc, pb95On100kmDesc, pb95PriceDesc,
 			kmOnPB95Desc, solutionDesc;
 	private JButton solveButton, exitButton, saveButton, loadButton;
@@ -47,25 +49,25 @@ public class AppFrame extends JFrame implements FocusListener, Consumptiable {
 		super("Kalkulator spalania");
 		setBounds(200, 10, 640, 480);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		title = new JLabel("WprowadŸ dane:");
+		title = new JLabel("Wprowadï¿½ dane:");
 		title1 = new JLabel("");
 		lpgOn100km = new JTextField("0", 10);
 		lpgOn100kmDesc = new JLabel("Spalanie LPG w l/100km:");
 		lpgPrice = new JTextField("0", 10);
 		lpgPriceDesc = new JLabel("Cena LPG:");
 		kmOnLPG = new JTextField("0", 10);
-		kmOnLPGDesc = new JLabel("D³ugoœæ trasy w km na LPG:");
+		kmOnLPGDesc = new JLabel("Dï¿½ugoï¿½ï¿½ trasy w km na LPG:");
 		pb95On100km = new JTextField("0", 10);
 		pb95On100kmDesc = new JLabel("Spalanie PB95/ON w l/100km:");
 		pb95Price = new JTextField("0", 10);
 		pb95PriceDesc = new JLabel("Cena PB95/ON:");
 		kmOnPB95 = new JTextField("0", 10);
-		kmOnPB95Desc = new JLabel("D³ugoœæ trasy w km na PB95/ON:");
+		kmOnPB95Desc = new JLabel("Dï¿½ugoï¿½ï¿½ trasy w km na PB95/ON:");
 		solution = new JTextField("0", 10);
 		solutionDesc = new JLabel("Koszt trasy o podanych parametrach wyniesie:");
 		solveButton = new JButton("Oblicz");
 		solveButton.setPreferredSize(new Dimension(80, 60));
-		exitButton = new JButton("Wyjœcie");
+		exitButton = new JButton("Wyjï¿½cie");
 		exitButton.setPreferredSize(new Dimension(80, 60));
 		saveButton = new JButton("Zapisz");
 		saveButton.setPreferredSize(new Dimension(80, 60));
@@ -73,7 +75,7 @@ public class AppFrame extends JFrame implements FocusListener, Consumptiable {
 		loadButton.setPreferredSize(new Dimension(80, 60));
 		solution.setEditable(false);
 
-		lpgOn100km.addFocusListener(this); // tworzenie reakcji na klikanie oraz aktywacjê/deaktywacjê pól
+		lpgOn100km.addFocusListener(this); // tworzenie reakcji na klikanie oraz aktywacjï¿½/deaktywacjï¿½ pï¿½l
 		lpgPrice.addFocusListener(this);
 		kmOnLPG.addFocusListener(this);
 		pb95On100km.addFocusListener(this);
@@ -85,7 +87,7 @@ public class AppFrame extends JFrame implements FocusListener, Consumptiable {
 		saveButton.addActionListener(listen);
 		loadButton.addActionListener(listen);
 
-		titlePart = new JPanel(); // rozmieszcznie elementów w trzech grupach w okreslonej kolejnoœci
+		titlePart = new JPanel(); // rozmieszcznie elementï¿½w w trzech grupach w okreslonej kolejnoï¿½ci
 		titlePart.add(title1);
 		titlePart.add(title);
 
@@ -126,13 +128,14 @@ public class AppFrame extends JFrame implements FocusListener, Consumptiable {
 		new AppFrame();
 	}
 
-	private ActionListener listen = (ActionEvent e) -> {// test lambdy - reakcja na wciœniêcie przyisków
+	private ActionListener listen = (ActionEvent e) -> {// test lambdy - reakcja na wciï¿½niï¿½cie przyiskï¿½w
 		//title.setText(" ");
 		//title1.setText("");
 		Object source = e.getSource();
 		if (source == solveButton) {
 			parseInput();
-			fuelCost();
+			calculateCost();
+			updateFields();
 		}
 		if (source == exitButton) {
 			System.exit(0);
@@ -147,65 +150,69 @@ public class AppFrame extends JFrame implements FocusListener, Consumptiable {
 	};
 
 	@Override
-	public void focusGained(FocusEvent e1e) {// reakcja na aktywacjê elementu
+	public void focusGained(FocusEvent e1e) {// reakcja na aktywacjï¿½ elementu
 
 	}
 
 	@Override
-	public void focusLost(FocusEvent e1e) {// reakcja na wyjœcie z elementu
+	public void focusLost(FocusEvent e1e) {// reakcja na wyjï¿½cie z elementu
 		
 		parseInput();
 	}
 
-	private void parseInput() {// zamiana danych wprowadzonych przez usera na wartoœci double + obs³uga formatu
+	private void parseInput() {// zamiana danych wprowadzonych przez usera na wartoï¿½ci double + obsï¿½uga formatu
 	    title1.setText("");
 		title.setText(" ");
 		try {
 			dlpgOn100km = Double.parseDouble(lpgOn100km.getText());
 		} catch (NumberFormatException ww) {
-			title.setText("B³êdny format danych! WprowadŸ ponownie:");
+			title.setText("Bï¿½ï¿½dny format danych! Wprowadï¿½ ponownie:");
 			lpgOn100km.setText("0.00");
 		}
 		try {
 			dlpgPrice = Double.parseDouble(lpgPrice.getText());
 		} catch (NumberFormatException ww) {
-			title.setText("B³êdny format danych! WprowadŸ ponownie:");
+			title.setText("Bï¿½ï¿½dny format danych! Wprowadï¿½ ponownie:");
 			lpgPrice.setText("0.00");
 		}
 		try {
 			dkmOnLPG = Double.parseDouble(kmOnLPG.getText());
 		} catch (NumberFormatException ww) {
-			title.setText("B³êdny format danych! WprowadŸ ponownie:");
+			title.setText("Bï¿½ï¿½dny format danych! Wprowadï¿½ ponownie:");
 			kmOnLPG.setText("0.00");
 		}
 		try {
 			dpb95On100km = Double.parseDouble(pb95On100km.getText());
 		} catch (NumberFormatException ww) {
-			title.setText("B³êdny format danych! WprowadŸ ponownie:");
+			title.setText("Bï¿½ï¿½dny format danych! Wprowadï¿½ ponownie:");
 			pb95On100km.setText("0.00");
 		}
 		try {
 			dpb95Price = Double.parseDouble(pb95Price.getText());
 		} catch (NumberFormatException ww) {
-			title.setText("B³êdny format danych! WprowadŸ ponownie:");
+			title.setText("Bï¿½ï¿½dny format danych! Wprowadï¿½ ponownie:");
 			pb95Price.setText("0.00");
 		}
 		try {
 			dkmOnPB95 = Double.parseDouble(kmOnPB95.getText());
 		} catch (NumberFormatException ww) {
-			title.setText("B³êdny format danych! WprowadŸ ponownie:");
+			title.setText("Bï¿½ï¿½dny format danych! Wprowadï¿½ ponownie:");
 			kmOnPB95.setText("0.00");
 		}
 
 	}
 
 	@Override
-	public void fuelCost() {// obliczanie wyniku
-		Double result = (Math.round(
+	public double calculateCost() {// obliczanie wyniku
+		dsolution = (Math.round(
 				(dlpgOn100km * dlpgPrice * dkmOnLPG / 100 + dpb95On100km * dpb95Price * dkmOnPB95 / 100) * 1000.0))
 				/ 1000.0;
-		solution.setText("" + result);
-		title.setText("Wykonano obliczenia. WprowadŸ nowe dane:");
+		return dsolution;
+	}
+	
+	private void updateFields() {
+	    solution.setText("" + dsolution);
+	    title.setText("Wykonano obliczenia. Wprowadï¿½ nowe dane:");
 	}
 
 	private void saveToTxt() {// zapis do pliku txt
@@ -215,13 +222,13 @@ public class AppFrame extends JFrame implements FocusListener, Consumptiable {
 		// FileWriter("Dane.txt")));
 		) {
 			pw1.write("Spalanie LPG na 100km: " + this.lpgOn100km.getText() + "\n" + "Cena LPG:"
-					+ this.lpgPrice.getText() + "\n" + "Iloœæ kilometrów na LPG: " + this.kmOnLPG.getText() + "\n"
+					+ this.lpgPrice.getText() + "\n" + "Iloï¿½ï¿½ kilometrï¿½w na LPG: " + this.kmOnLPG.getText() + "\n"
 					+ "Spalanie pb95 na 100km: " + this.pb95On100km.getText() + "\n" + "Cena PB95: "
-					+ this.pb95Price.getText() + "\n" + "Iloœæ kilometrów na pb95: " + this.kmOnPB95.getText() + "\n"
+					+ this.pb95Price.getText() + "\n" + "Iloï¿½ï¿½ kilometrï¿½w na pb95: " + this.kmOnPB95.getText() + "\n"
 					+ "Koszt trasy wyniesie: " + this.solution.getText());
 
 		} catch (IOException e) {
-			System.err.println("B³¹d we/wy");
+			System.err.println("Bï¿½ï¿½d we/wy");
 			e.printStackTrace();
 		}
 
@@ -243,8 +250,8 @@ public class AppFrame extends JFrame implements FocusListener, Consumptiable {
 				PreparedStatement upTable = conn.prepareStatement("INSERT INTO "
 						+ "ADAM.CARDATA(dlpgOn100km, dlpgPrice, dkmOnLPG, dpb95On100km, dpb95Price, dkmOnPB95)\r\n"
 						+ "VALUES(?,?,?,?,?,?)"))
-		// "UPDATE ADAM.CARDATA SET DLPGON100KM=?" gdy chcemy nadpisaæ wszystkie wiersze
-		// lub wybieramy wg klucza z WHERE. Nie dzia³a, gdy brak wierszy
+		// "UPDATE ADAM.CARDATA SET DLPGON100KM=?" gdy chcemy nadpisaï¿½ wszystkie wiersze
+		// lub wybieramy wg klucza z WHERE. Nie dziaï¿½a, gdy brak wierszy
 		{
 			upTable.setDouble(1, dlpgOn100km);
 			upTable.setDouble(2, dlpgPrice);
@@ -253,9 +260,9 @@ public class AppFrame extends JFrame implements FocusListener, Consumptiable {
 			upTable.setDouble(5, dpb95Price);
 			upTable.setDouble(6, dkmOnPB95);
 			upTable.executeUpdate();
-			title.setText("Wartoœci zosta³y zapisane w bazie danych");
+			title.setText("Wartoï¿½ci zostaï¿½y zapisane w bazie danych");
 		} catch (SQLException ole) {
-		    JOptionPane.showMessageDialog(null, "B³¹d zapisu danych");	
+		    JOptionPane.showMessageDialog(null, "Bï¿½ï¿½d zapisu danych");	
 		    System.out.println(ole.getMessage());
 		}
 	}
@@ -280,7 +287,7 @@ public class AppFrame extends JFrame implements FocusListener, Consumptiable {
 
 		catch (SQLException ole) {
 			System.out.println(ole.getMessage());
-			title.setText("Brak rekordów, najpierw wykonaj zapis danych!");
+			title.setText("Brak rekordï¿½w, najpierw wykonaj zapis danych!");
 		}
 
 	}
