@@ -95,7 +95,7 @@ public
 
 catch (SQLException ole) {
 	System.out.println(ole.getMessage());
-	title.setText("Brak rekord�w, najpierw wykonaj zapis danych!");
+	title.setText("Brak rekordów, najpierw wykonaj zapis danych!");
 }
    }
    @FXML
@@ -112,37 +112,37 @@ catch (SQLException ole) {
        try {
 	   dlpgOn100km = Double.parseDouble(lpgOn100km.getText());
 	} catch (NumberFormatException ww) {
-		title.setText("B��dny format danych! Wprowad� ponownie:");
+		title.setText("Błędny format danych! Wprowadz ponownie:");
 		lpgOn100km.setText("0.00");
 	}
 	try {
 		dlpgPrice = Double.parseDouble(lpgPrice.getText());
 	} catch (NumberFormatException ww) {
-		title.setText("B��dny format danych! Wprowad� ponownie:");
+		title.setText("Błędny format danych! Wprowadz ponownie:");
 		lpgPrice.setText("0.00");
 	}
 	try {
 		dkmOnLPG = Double.parseDouble(kmOnLPG.getText());
 	} catch (NumberFormatException ww) {
-		title.setText("B��dny format danych! Wprowad� ponownie:");
+		title.setText("Błędny format danych! Wprowadz ponownie:");
 		kmOnLPG.setText("0.00");
 	}
 	try {
 		dpb95On100km = Double.parseDouble(pb95On100km.getText());
 	} catch (NumberFormatException ww) {
-		title.setText("B��dny format danych! Wprowad� ponownie:");
+		title.setText("Błędny format danych! Wprowadz ponownie:");
 		pb95On100km.setText("0.00");
 	}
 	try {
 		dpb95Price = Double.parseDouble(pb95Price.getText());
 	} catch (NumberFormatException ww) {
-		title.setText("B��dny format danych! Wprowad� ponownie:");
+		title.setText("Błędny format danych! Wprowadz ponownie:");
 		pb95Price.setText("0.00");
 	}
 	try {
 		dkmOnPB95 = Double.parseDouble(kmOnPB95.getText());
 	} catch (NumberFormatException ww) {
-		title.setText("B��dny format danych! Wprowad� ponownie:");
+		title.setText("Błędny format danych! Wprowadz ponownie:");
 		kmOnPB95.setText("0.00");
 	}
 
@@ -153,7 +153,7 @@ void fuelCost() {// obliczanie wyniku
 			(dlpgOn100km * dlpgPrice * dkmOnLPG / 100 + dpb95On100km * dpb95Price * dkmOnPB95 / 100) * 1000.0))
 			/ 1000.0;
 	solution.setText("" + result);
-	title.setText("Wykonano obliczenia. Wprowad� nowe dane:");
+	title.setText("Wykonano obliczenia. Wprowadz nowe dane:");
 }
 
 private void saveToTxt() {// zapis do pliku txt
@@ -163,13 +163,13 @@ private void saveToTxt() {// zapis do pliku txt
 	// FileWriter("Dane.txt")));
 	) {
 		pw1.write("Spalanie LPG na 100km: " + this.lpgOn100km.getText() + "\n" + "Cena LPG:"
-				+ this.lpgPrice.getText() + "\n" + "Ilo�� kilometr�w na LPG: " + this.kmOnLPG.getText() + "\n"
+				+ this.lpgPrice.getText() + "\n" + "Ilość kilometrów na LPG: " + this.kmOnLPG.getText() + "\n"
 				+ "Spalanie pb95 na 100km: " + this.pb95On100km.getText() + "\n" + "Cena PB95: "
-				+ this.pb95Price.getText() + "\n" + "Ilo�� kilometr�w na pb95: " + this.kmOnPB95.getText() + "\n"
+				+ this.pb95Price.getText() + "\n" + "Ilość kilometrów na pb95: " + this.kmOnPB95.getText() + "\n"
 				+ "Koszt trasy wyniesie: " + this.solution.getText());
 
 	} catch (IOException e) {
-		System.err.println("B��d we/wy");
+		System.err.println("Błąd we/wy");
 		e.printStackTrace();
 	}
 
@@ -189,8 +189,8 @@ private void saveToDB() {// zapis do bazy danych
 			PreparedStatement upTable = conn.prepareStatement("INSERT INTO "
 					+ "ADAM.CARDATA(lpgOn100km, lpgPrice, kmOnLPG, pb95On100km, pb95Price, kmOnPB95)\r\n"
 					+ "VALUES(?,?,?,?,?,?)"))
-	// "UPDATE ADAM.CARDATA SET DLPGON100KM=?" gdy chcemy nadpisa� wszystkie wiersze
-	// lub wybieramy wg klucza z WHERE. Nie dzia�a, gdy brak wierszy
+	// "UPDATE ADAM.CARDATA SET DLPGON100KM=?" gdy chcemy nadpisać wszystkie wiersze
+	// lub wybieramy wg klucza z WHERE. Nie działa, gdy brak wierszy
 	{
 		upTable.setDouble(1, dlpgOn100km);
 		upTable.setDouble(2, dlpgPrice);
@@ -199,9 +199,9 @@ private void saveToDB() {// zapis do bazy danych
 		upTable.setDouble(5, dpb95Price);
 		upTable.setDouble(6, dkmOnPB95);
 		upTable.executeUpdate();
-		title.setText("Warto�ci zosta�y zapisane w bazie danych");
+		title.setText("Wartości zostały zapisane w bazie danych");
 	} catch (SQLException ole) {
-	    JOptionPane.showMessageDialog(null, "B��d zapisu danych");	
+	    JOptionPane.showMessageDialog(null, "Błąd zapisu danych");	
 	    System.out.println(ole.getMessage());
 	}
 }

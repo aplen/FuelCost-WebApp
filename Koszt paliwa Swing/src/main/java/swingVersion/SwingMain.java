@@ -29,9 +29,8 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
 import consoleVersion.FuelCost;
-import consoleVersion.FuelCostCalculator;
 
-public class AppFrame extends JFrame implements FocusListener{
+public class SwingMain extends JFrame implements FocusListener{
     	
     	
 	private static final long serialVersionUID = 1L;
@@ -48,7 +47,7 @@ public class AppFrame extends JFrame implements FocusListener{
 		return new Insets(40, 20, 20, 20);
 	}
 
-	private AppFrame() {// konstruktor okna
+	private SwingMain() {// konstruktor okna
 		super("Kalkulator spalania");
 		setBounds(200, 10, 640, 480);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -128,7 +127,7 @@ public class AppFrame extends JFrame implements FocusListener{
 	}
 
 	public static void main(String[] arguments) {
-		new AppFrame();
+		new SwingMain();
 	}
 
 	private ActionListener listen = (ActionEvent e) -> {// test lambdy - reakcja na wcisniecie przyciskow

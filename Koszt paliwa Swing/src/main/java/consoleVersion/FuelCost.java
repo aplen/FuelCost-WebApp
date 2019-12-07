@@ -1,6 +1,6 @@
 package consoleVersion;
 
-public class FuelCost implements FuelCostCalculator  {
+public class FuelCost {
 
     
     public  double calculateFuelCost() {
