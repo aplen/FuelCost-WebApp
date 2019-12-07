@@ -82,12 +82,12 @@ public
 	ResultSet result = upTable.executeQuery();
 
 	while (result.next()) {
-		lpgOn100km.setText("" + result.getDouble("DLPGON100KM"));
-		lpgPrice.setText("" + result.getDouble("DLPGPRICE"));
-		kmOnLPG.setText("" + result.getDouble("DKMONLPG"));
-		pb95On100km.setText("" + result.getDouble("DPB95ON100KM"));
-		pb95Price.setText("" + result.getDouble("DPB95PRICE"));
-		kmOnPB95.setText("" + result.getDouble("DKMONPB95"));
+		lpgOn100km.setText("" + result.getDouble("LPGON100KM"));
+		lpgPrice.setText("" + result.getDouble("LPGPRICE"));
+		kmOnLPG.setText("" + result.getDouble("KMONLPG"));
+		pb95On100km.setText("" + result.getDouble("PB95ON100KM"));
+		pb95Price.setText("" + result.getDouble("PB95PRICE"));
+		kmOnPB95.setText("" + result.getDouble("KMONPB95"));
 
 	}
 	title.setText("Wczytano ostatnio zapisane dane");
@@ -95,7 +95,7 @@ public
 
 catch (SQLException ole) {
 	System.out.println(ole.getMessage());
-	title.setText("Brak rekordów, najpierw wykonaj zapis danych!");
+	title.setText("Brak rekordï¿½w, najpierw wykonaj zapis danych!");
 }
    }
    @FXML
@@ -106,43 +106,43 @@ catch (SQLException ole) {
    @FXML
    void exitButtonAction() {System.exit(0);}
    @FXML
-   private void parseInput() {// zamiana danych wprowadzonych przez usera na wartoœci double + obs³uga formatu
+   private void parseInput() {// zamiana danych wprowadzonych przez usera na wartoï¿½ci double + obsï¿½uga formatu
        	title1.setText("");
 	title.setText(" ");
        try {
 	   dlpgOn100km = Double.parseDouble(lpgOn100km.getText());
 	} catch (NumberFormatException ww) {
-		title.setText("B³êdny format danych! WprowadŸ ponownie:");
+		title.setText("Bï¿½ï¿½dny format danych! Wprowadï¿½ ponownie:");
 		lpgOn100km.setText("0.00");
 	}
 	try {
 		dlpgPrice = Double.parseDouble(lpgPrice.getText());
 	} catch (NumberFormatException ww) {
-		title.setText("B³êdny format danych! WprowadŸ ponownie:");
+		title.setText("Bï¿½ï¿½dny format danych! Wprowadï¿½ ponownie:");
 		lpgPrice.setText("0.00");
 	}
 	try {
 		dkmOnLPG = Double.parseDouble(kmOnLPG.getText());
 	} catch (NumberFormatException ww) {
-		title.setText("B³êdny format danych! WprowadŸ ponownie:");
+		title.setText("Bï¿½ï¿½dny format danych! Wprowadï¿½ ponownie:");
 		kmOnLPG.setText("0.00");
 	}
 	try {
 		dpb95On100km = Double.parseDouble(pb95On100km.getText());
 	} catch (NumberFormatException ww) {
-		title.setText("B³êdny format danych! WprowadŸ ponownie:");
+		title.setText("Bï¿½ï¿½dny format danych! Wprowadï¿½ ponownie:");
 		pb95On100km.setText("0.00");
 	}
 	try {
 		dpb95Price = Double.parseDouble(pb95Price.getText());
 	} catch (NumberFormatException ww) {
-		title.setText("B³êdny format danych! WprowadŸ ponownie:");
+		title.setText("Bï¿½ï¿½dny format danych! Wprowadï¿½ ponownie:");
 		pb95Price.setText("0.00");
 	}
 	try {
 		dkmOnPB95 = Double.parseDouble(kmOnPB95.getText());
 	} catch (NumberFormatException ww) {
-		title.setText("B³êdny format danych! WprowadŸ ponownie:");
+		title.setText("Bï¿½ï¿½dny format danych! Wprowadï¿½ ponownie:");
 		kmOnPB95.setText("0.00");
 	}
 
@@ -153,7 +153,7 @@ void fuelCost() {// obliczanie wyniku
 			(dlpgOn100km * dlpgPrice * dkmOnLPG / 100 + dpb95On100km * dpb95Price * dkmOnPB95 / 100) * 1000.0))
 			/ 1000.0;
 	solution.setText("" + result);
-	title.setText("Wykonano obliczenia. WprowadŸ nowe dane:");
+	title.setText("Wykonano obliczenia. Wprowadï¿½ nowe dane:");
 }
 
 private void saveToTxt() {// zapis do pliku txt
@@ -163,13 +163,13 @@ private void saveToTxt() {// zapis do pliku txt
 	// FileWriter("Dane.txt")));
 	) {
 		pw1.write("Spalanie LPG na 100km: " + this.lpgOn100km.getText() + "\n" + "Cena LPG:"
-				+ this.lpgPrice.getText() + "\n" + "Iloœæ kilometrów na LPG: " + this.kmOnLPG.getText() + "\n"
+				+ this.lpgPrice.getText() + "\n" + "Iloï¿½ï¿½ kilometrï¿½w na LPG: " + this.kmOnLPG.getText() + "\n"
 				+ "Spalanie pb95 na 100km: " + this.pb95On100km.getText() + "\n" + "Cena PB95: "
-				+ this.pb95Price.getText() + "\n" + "Iloœæ kilometrów na pb95: " + this.kmOnPB95.getText() + "\n"
+				+ this.pb95Price.getText() + "\n" + "Iloï¿½ï¿½ kilometrï¿½w na pb95: " + this.kmOnPB95.getText() + "\n"
 				+ "Koszt trasy wyniesie: " + this.solution.getText());
 
 	} catch (IOException e) {
-		System.err.println("B³¹d we/wy");
+		System.err.println("Bï¿½ï¿½d we/wy");
 		e.printStackTrace();
 	}
 
@@ -187,10 +187,10 @@ private void saveToDB() {// zapis do bazy danych
 	try (Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/D:/Databases/Baza Adama",
 			"Adam", "1234");
 			PreparedStatement upTable = conn.prepareStatement("INSERT INTO "
-					+ "ADAM.CARDATA(dlpgOn100km, dlpgPrice, dkmOnLPG, dpb95On100km, dpb95Price, dkmOnPB95)\r\n"
+					+ "ADAM.CARDATA(lpgOn100km, lpgPrice, kmOnLPG, pb95On100km, pb95Price, kmOnPB95)\r\n"
 					+ "VALUES(?,?,?,?,?,?)"))
-	// "UPDATE ADAM.CARDATA SET DLPGON100KM=?" gdy chcemy nadpisaæ wszystkie wiersze
-	// lub wybieramy wg klucza z WHERE. Nie dzia³a, gdy brak wierszy
+	// "UPDATE ADAM.CARDATA SET DLPGON100KM=?" gdy chcemy nadpisaï¿½ wszystkie wiersze
+	// lub wybieramy wg klucza z WHERE. Nie dziaï¿½a, gdy brak wierszy
 	{
 		upTable.setDouble(1, dlpgOn100km);
 		upTable.setDouble(2, dlpgPrice);
@@ -199,9 +199,9 @@ private void saveToDB() {// zapis do bazy danych
 		upTable.setDouble(5, dpb95Price);
 		upTable.setDouble(6, dkmOnPB95);
 		upTable.executeUpdate();
-		title.setText("Wartoœci zosta³y zapisane w bazie danych");
+		title.setText("Wartoï¿½ci zostaï¿½y zapisane w bazie danych");
 	} catch (SQLException ole) {
-	    JOptionPane.showMessageDialog(null, "B³¹d zapisu danych");	
+	    JOptionPane.showMessageDialog(null, "Bï¿½ï¿½d zapisu danych");	
 	    System.out.println(ole.getMessage());
 	}
 }
