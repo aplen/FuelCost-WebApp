@@ -4,8 +4,8 @@ public class FuelCost {
 
     
     public  double calculateFuelCost() {
-	return (Math.round((lpgOn100km * lpgPrice * kmOnLPG / 100 + pb95On100km * pb95Price * kmOnPB95 / 100) * 1000.0))
-		/ 1000.0;
+	return (Math.round((lpgOn100km * lpgPrice * kmOnLPG / 100 + pb95On100km * pb95Price * kmOnPB95 / 100) * 100.0))
+		/ 100.0;
     }
 
     private double lpgOn100km, lpgPrice, kmOnLPG, pb95On100km, pb95Price, kmOnPB95;
