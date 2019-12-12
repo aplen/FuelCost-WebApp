@@ -36,6 +36,7 @@ public class ConsoleReader {
 	    } catch (InputMismatchException e) {
 
 		System.out.printf("Niepoprawny format danych, wprowadz ponownie\n");
+		scan.next();
 	    }
 	} while (isNotCorrect);
 
