@@ -1,3 +1,4 @@
+
 package cellMultiplication;
 
 import java.util.ArrayList;
@@ -8,10 +9,10 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public class Multiplication {
-
+    
     List<Cell> cellList;
     int iloscOrganizmowCyklu;
-
+    static int counter = 0;
     public Multiplication(List<Cell> cellList) {
 	this.cellList = cellList;
 	iloscOrganizmowCyklu = cellList.size();
@@ -32,9 +33,10 @@ public class Multiplication {
 	for (int i = iloscOrganizmowCyklu; i > 0; i--) {
 	    cellList.add(new Cell(iloscOrganizmowCyklu + 1));
 	    iloscOrganizmowCyklu = iloscOrganizmowCyklu + 1;
-	    
+	   
 	}
-	System.out.println("Cykl: " + cellList + "end");
+	 counter++;
+	System.out.println("Cykl "+counter+": " + cellList);
 	    System.out.println(iloscOrganizmowCyklu);
     }
 
