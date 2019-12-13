@@ -8,8 +8,16 @@ public class FuelCost {
 		/ 100.0;
     }
 
-    private double lpgOn100km, lpgPrice, kmOnLPG, pb95On100km, pb95Price, kmOnPB95;
+    private double lpgOn100km, lpgPrice, kmOnLPG, pb95On100km, pb95Price, kmOnPB95, cost;
 
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
 
     public double getLpgOn100km() {
         return lpgOn100km;

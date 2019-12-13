@@ -4,34 +4,38 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ConsoleReader {
+    /*
+     * klasa ustawia i waliduje wartości pól klasy FuelCost danymi pobranymi od użytkownika za pomocą klasy Scanner
+     */
 
-    static void retrieveData() {
+    void retrieveData(FuelCost fc) {
 	Scanner scan = new Scanner(System.in);
 	boolean isNotCorrect = true;
-	double cost = 0;
-	FuelCost fuelCost = new FuelCost();
-
+/*
+ * pobieranie danych od użytkownika w pętli, która wykonuje się dopóki wszystkie pola nie zostaną wypełnione poprawnymi wartościami
+ * 
+ */
 	do {
 	    try {
 		System.out.print("Podaj szacowane średnie spalanie benzyny (w litrach/100km) w Twoim samochodzie \n"
 			+ "wez pod uwagę charakter trasy, którą chcesz pokonać:");
-		fuelCost.setPb95On100km(scan.nextDouble());
-		System.out.print(
-			"Podaj szacowane średnie spalanie LPG (w litrach/100km) w Twoim samochodzie \n"
+		fc.setPb95On100km(scan.nextDouble());
+		System.out.print("Podaj szacowane średnie spalanie LPG (w litrach/100km) w Twoim samochodzie \n"
 			+ "wez pod uwagę charakter trasy, którą chcesz pokonać:");
-		fuelCost.setLpgOn100km(scan.nextDouble());
+		fc.setLpgOn100km(scan.nextDouble());
 		System.out.print("Ile kosztuje litr benzyny?");
-		fuelCost.setPb95Price(scan.nextDouble());
+		fc.setPb95Price(scan.nextDouble());
 		System.out.print("Ile kosztuje litr LPG?");
-		fuelCost.setLpgPrice(scan.nextDouble());
+		fc.setLpgPrice(scan.nextDouble());
 		System.out.print("Ile km przejedziesz na LPG?");
-		fuelCost.setKmOnLPG(scan.nextDouble());
+		fc.setKmOnLPG(scan.nextDouble());
 		System.out.print("Ile km przejedziesz na benzynie?");
-		fuelCost.setKmOnPB95(scan.nextDouble());
+		fc.setKmOnPB95(scan.nextDouble());
 
-		cost = fuelCost.calculateFuelCost();
-		if (cost < 0)
-		    throw new InputMismatchException();
+//		fuelCost.setCost(fuelCost.calculateFuelCost());
+//		if (fuelCost.getCost() < 0)
+//		    throw new InputMismatchException();
+		
 		isNotCorrect = false;
 	    } catch (InputMismatchException e) {
 
@@ -42,23 +46,6 @@ public class ConsoleReader {
 
 	scan.close();
 
-	StringBuilder b = new StringBuilder();
-	b.append("Cena LPG za 1 litr: ");
-	b.append(fuelCost.getLpgPrice());
-	b.append(" PLN\nCena benzyny za 1 litr: ");
-	b.append(fuelCost.getPb95Price());
-	b.append(" PLN\n");
-	b.append(fuelCost.getKmOnLPG());
-	b.append(" kilometrów na LPG\n");
-	b.append(fuelCost.getKmOnPB95());
-	b.append(" kilometrów na benzynie\n");
-	b.append(fuelCost.getLpgOn100km());
-	b.append(" - spalanie LPG na 100km\n");
-	b.append(fuelCost.getPb95On100km());
-	b.append(" - spalanie benzyny na 100km\nKoszt podróży wyniesie ");
-	b.append(cost);
-	b.append(" PLN");
-	System.out.println(b.substring(0));
 
     }
 
