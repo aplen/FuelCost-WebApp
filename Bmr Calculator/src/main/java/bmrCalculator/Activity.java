@@ -1,11 +1,11 @@
 package bmrCalculator;
 
 public enum Activity {
-    NONE(1.2, "brak aktywnosci, praca siedzaca"),
-    LOW(1.4, "niska aktywnosc (praca siedzaca i 1-2 treningi w tygodniu)"),
-    MEDIUM(1.6, "srednia aktywnosc (praca siedzaca i treningi 3-4 razy w tygodniu)"),
-    HIGH(1.8, "wysoka aktywnosc (praca fizyczna i 3-4 treningi w tygodniu)"),
-    VERY_HIGH(2.0, "bardzo wysoka aktywnosc (zawodowi sportowcy, osoby codziennie trenujace)");
+    NONE(1.2, "brak aktywności, praca siedząca"),
+    LOW(1.4, "niska aktywność (praca siedząca i 1-2 treningi w tygodniu)"),
+    MEDIUM(1.6, "średnia aktywność (praca siedząca i treningi 3-4 razy w tygodniu)"),
+    HIGH(1.8, "wysoka aktywność (praca fizyczna i 3-4 treningi w tygodniu)"),
+    VERY_HIGH(2.0, "bardzo wysoka aktywność (zawodowi sportowcy, osoby codziennie trenujące)");
 
     String describe;
     double factor;

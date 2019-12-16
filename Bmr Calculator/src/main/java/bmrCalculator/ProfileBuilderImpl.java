@@ -2,10 +2,10 @@ package bmrCalculator;
 
 public class ProfileBuilderImpl implements ProfileBuilder {
 
-    private Profile person;
+    private Person person;
 
     ProfileBuilderImpl() {
-   	person = new Profile(); //powstanie nowy obiekt bez argumentow
+   	person = new Person();
        }
 
     @Override
@@ -14,12 +14,9 @@ public class ProfileBuilderImpl implements ProfileBuilder {
     }
 
     @Override
-    public Profile build() {//ta metoda pozwoli wydobyc nasz obiekt z przypisanymi argumentami z buildera
+    public Person build() {
 	return person;
     }
-/*
- * metody typu interfejsu zmieniaja settery klasy Person
- */
 
 
     @Override

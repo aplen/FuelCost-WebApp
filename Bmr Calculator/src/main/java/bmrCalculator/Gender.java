@@ -1,5 +1,5 @@
 package bmrCalculator;
 
 public enum Gender {
-	    MAN, WOMAN;
+	    MALE, FEMALE;
 	}

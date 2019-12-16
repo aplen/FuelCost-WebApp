@@ -2,8 +2,7 @@ package bmrCalculator;
 
 public interface ProfileBuilder {
     
-    
-    Profile build();
+    Person build();
     
     ProfileBuilder setFizGender(final Gender fizGender);
     ProfileBuilder setActivity(final Activity strength);

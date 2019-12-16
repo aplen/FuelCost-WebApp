@@ -6,17 +6,18 @@ public class Program {
 
 	ProfileBuilder builder = new ProfileBuilderImpl();
 
-	builder.setAge(35);
-	builder.setFizGender(Gender.MAN);
-	builder.setHeight(174);
-	builder.setName("Adam");
-	builder.setActivity(Activity.NONE);
-	builder.setWeight(75);
-	Profile myPerson = builder.build();
-
-	System.out.println(myPerson);
-	BmrCalculator calc = new BmrCalculator();
-	calc.bmrCounter(myPerson);
+	builder.setAge(32);
+	builder.setFizGender(Gender.FEMALE);
+	builder.setHeight(168);
+	builder.setName("Kasia");
+	builder.setActivity(Activity.LOW);
+	builder.setWeight(90);
+	
+	Person person = builder.build();
+	System.out.println(person);
+	BmrCalculator calculator = new BmrCalculator();
+	calculator.countBMI(person);
+	calculator.countCPM_TMR(person);
     }
 
 }

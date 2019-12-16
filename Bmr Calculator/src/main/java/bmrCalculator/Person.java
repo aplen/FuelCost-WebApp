@@ -1,6 +1,6 @@
 package bmrCalculator;
 
-public class Profile {
+public class Person {
     
    
     private Gender fizGender;
@@ -48,7 +48,12 @@ public class Profile {
     }
     @Override
     public String toString() {
-	return "Profil:\nPłeć=" + fizGender + ", aktywność=" + activity + ", \nimię: " + name + ", waga=" + weight
-		+ "kg, wzrost=" + height + "cm, wiek=" + age + "lat";
+	String choose="";
+	if (fizGender == Gender.MALE)
+	    choose=", wprowadziłeś";
+	if (fizGender == Gender.FEMALE)
+	    choose=", wprowadziłaś";
+	return "Witaj " + name + choose +" dane:\nPłeć= " + fizGender + ", aktywność= " + activity + ", \nwaga= " + weight
+		+ "kg, wzrost= " + height + "cm, wiek= " + age + " lat.\n";
     }
 }
