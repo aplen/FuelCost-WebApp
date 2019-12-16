@@ -4,7 +4,7 @@ public class BmrCalculator {
     double bmr;
     double bmi;
     
-    void countBMI(Person person) {
+    void countBmi(Person person) {
 	double height = person.getHeight()/100;
 	bmi=person.getWeight()/(height*height);
 	bmi = Math.round(bmi * 100) / 100;
@@ -24,7 +24,7 @@ public class BmrCalculator {
 	}
     }
     
-   private void countPPM_BMR(Person person) {
+   private void countPpmBmr(Person person) {
 	
 	if (person.getFizGender() == Gender.MALE) {
 
@@ -42,8 +42,8 @@ public class BmrCalculator {
 	bmr = Math.round(bmr * 100) / 100;
 	System.out.println("Twoje PPM/BMR (podstawowa przemiana materii) wynosi: " + bmr+" kcal");
     }
-    void countCPM_TMR(Person person) {
-	countPPM_BMR(person);
+    void countCpmTmr(Person person) {
+	countPpmBmr(person);
 	switch (person.getActivity()) {
 	case NONE:
 	    bmr = bmr * person.getActivity().factor;

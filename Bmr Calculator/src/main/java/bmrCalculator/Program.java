@@ -16,8 +16,8 @@ public class Program {
 	Person person = builder.build();
 	System.out.println(person);
 	BmrCalculator calculator = new BmrCalculator();
-	calculator.countBMI(person);
-	calculator.countCPM_TMR(person);
+	calculator.countBmi(person);
+	calculator.countCpmTmr(person);
     }
 
 }
