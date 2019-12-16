@@ -4,8 +4,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ConsoleReader {
-    /*
-     * klasa ustawia i waliduje wartości pól klasy FuelCost danymi pobranymi od użytkownika za pomocą klasy Scanner
+    /**
+     * ustawia i waliduje wartości pól klasy FuelCost danymi pobranymi od użytkownika za pomocą klasy Scanner
      */
 
     void retrieveData(FuelCost fc) {
@@ -32,10 +32,6 @@ public class ConsoleReader {
 		System.out.print("Ile km przejedziesz na benzynie?");
 		fc.setKmOnPB95(scan.nextDouble());
 
-//		fuelCost.setCost(fuelCost.calculateFuelCost());
-//		if (fuelCost.getCost() < 0)
-//		    throw new InputMismatchException();
-		
 		isNotCorrect = false;
 	    } catch (InputMismatchException e) {
 

@@ -1,7 +1,13 @@
 package consoleVersion;
 
+import java.util.InputMismatchException;
+
 public class FuelCost {
 
+    /**
+     * oblicza koszt paliwa 
+     * @return
+     */
     
     public  double calculateFuelCost() {
 	return (Math.round((lpgOn100km * lpgPrice * kmOnLPG / 100 + pb95On100km * pb95Price * kmOnPB95 / 100) * 100.0))
@@ -16,7 +22,9 @@ public class FuelCost {
     }
 
     public void setCost(double cost) {
+	
         this.cost = cost;
+        
     }
 
     public double getLpgOn100km() {

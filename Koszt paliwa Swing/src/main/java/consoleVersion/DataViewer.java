@@ -1,7 +1,11 @@
 package consoleVersion;
 
 public class DataViewer {
-
+/**
+ * Łączy pobrane dane i wynik w String oraz wyświetla użytkownikowi
+ *  
+ * @param fc
+ */
      void viewData(FuelCost fc){
 	
 	StringBuilder b = new StringBuilder();

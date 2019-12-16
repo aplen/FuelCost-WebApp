@@ -14,11 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
-
 import javax.swing.JOptionPane;
-
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -106,7 +102,7 @@ catch (SQLException ole) {
    @FXML
    void exitButtonAction() {System.exit(0);}
    @FXML
-   private void parseInput() {// zamiana danych wprowadzonych przez usera na warto�ci double + obs�uga formatu
+   private void parseInput() {// zamiana danych wprowadzonych przez usera na wartosci double + obsluga formatu
        	title1.setText("");
 	title.setText(" ");
        try {
@@ -162,11 +158,11 @@ private void saveToTxt() {// zapis do pliku txt
 	// PrintWriter pw = new PrintWriter(new BufferedWriter(new
 	// FileWriter("Dane.txt")));
 	) {
-		pw1.write("Spalanie LPG na 100km: " + this.lpgOn100km.getText() + "\n" + "Cena LPG:"
-				+ this.lpgPrice.getText() + "\n" + "Ilość kilometrów na LPG: " + this.kmOnLPG.getText() + "\n"
-				+ "Spalanie pb95 na 100km: " + this.pb95On100km.getText() + "\n" + "Cena PB95: "
-				+ this.pb95Price.getText() + "\n" + "Ilość kilometrów na pb95: " + this.kmOnPB95.getText() + "\n"
-				+ "Koszt trasy wyniesie: " + this.solution.getText());
+		pw1.write("Spalanie LPG na 100km: " + lpgOn100km.getText() + "\n" + "Cena LPG:"
+				+ lpgPrice.getText() + "\n" + "Ilość kilometrów na LPG: " + kmOnLPG.getText() + "\n"
+				+ "Spalanie pb95 na 100km: " + pb95On100km.getText() + "\n" + "Cena PB95: "
+				+ pb95Price.getText() + "\n" + "Ilość kilometrów na pb95: " + kmOnPB95.getText() + "\n"
+				+ "Koszt trasy wyniesie: " + solution.getText());
 
 	} catch (IOException e) {
 		System.err.println("Błąd we/wy");
