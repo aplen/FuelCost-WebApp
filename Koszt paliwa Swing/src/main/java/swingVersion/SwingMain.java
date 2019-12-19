@@ -29,13 +29,14 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
 import consoleVersion.FuelCost;
+import consoleVersion.Trip;
 
 public class SwingMain extends JFrame implements FocusListener{
     	
     	
 	private static final long serialVersionUID = 1L;
 	FuelCost fuelCost = new FuelCost();
-    	private double cost = 0;
+	Trip trip = new Trip();
 	private JTextField jLpgOn100km, jLpgPrice, jKmOnLPG, jPb95On100km, jPb95Price, jKmOnPB95, jCost;
 	private JLabel title, title1, lpgOn100kmDesc, lpgPriceDesc, kmOnLPGDesc, pb95On100kmDesc, pb95PriceDesc,
 			kmOnPB95Desc, solutionDesc;
@@ -137,7 +138,7 @@ public class SwingMain extends JFrame implements FocusListener{
 		if (source == solveButton) {
 		    
 		    	parseInput();
-			cost=fuelCost.calculateFuelCost();
+			fuelCost.calculateFuelCost(trip);
 			updateFields();
 		}
 		if (source == exitButton) {
@@ -167,38 +168,38 @@ public class SwingMain extends JFrame implements FocusListener{
 	    title1.setText("");
 		title.setText(" ");
 		try {
-			fuelCost.setLpgOn100km(Double.parseDouble(jLpgOn100km.getText()));
-		} catch (NumberFormatException ww) {
+			trip.setLpgOn100km(Double.parseDouble(jLpgOn100km.getText()));
+		} catch (IllegalArgumentException e) {
 			title.setText("Błędny format danych! Wprowadz ponownie:");
 			jLpgOn100km.setText("0.00");
 		}
 		try {
-			fuelCost.setLpgPrice(Double.parseDouble(jLpgPrice.getText()));
-		} catch (NumberFormatException ww) {
+			trip.setLpgPrice(Double.parseDouble(jLpgPrice.getText()));
+		} catch (IllegalArgumentException e) {
 		    title.setText("Błędny format danych! Wprowadz ponownie:");
 			jLpgPrice.setText("0.00");
 		}
 		try {
-		    fuelCost.setKmOnLPG(Double.parseDouble(jKmOnLPG.getText()));
-		} catch (NumberFormatException ww) {
+		    trip.setKmOnLPG(Double.parseDouble(jKmOnLPG.getText()));
+		} catch (IllegalArgumentException e) {
 		    title.setText("Błędny format danych! Wprowadz ponownie:");
 			jKmOnLPG.setText("0.00");
 		}
 		try {
-			fuelCost.setPb95On100km(Double.parseDouble(jPb95On100km.getText()));
-		} catch (NumberFormatException ww) {
+			trip.setPb95On100km(Double.parseDouble(jPb95On100km.getText()));
+		} catch (IllegalArgumentException e) {
 		    title.setText("Błędny format danych! Wprowadz ponownie:");
 			jPb95On100km.setText("0.00");
 		}
 		try {
-			fuelCost.setPb95Price(Double.parseDouble(jPb95Price.getText()));
-		} catch (NumberFormatException ww) {
+			trip.setPb95Price(Double.parseDouble(jPb95Price.getText()));
+		} catch (IllegalArgumentException e) {
 		    title.setText("Błędny format danych! Wprowadz ponownie:");
 			jPb95Price.setText("0.00");
 		}
 		try {
-			fuelCost.setKmOnPB95(Double.parseDouble(jKmOnPB95.getText()));
-		} catch (NumberFormatException ww) {
+			trip.setKmOnPB95(Double.parseDouble(jKmOnPB95.getText()));
+		} catch (IllegalArgumentException e) {
 		    title.setText("Błędny format danych! Wprowadz ponownie:");
 			jKmOnPB95.setText("0.00");
 		}
@@ -206,7 +207,7 @@ public class SwingMain extends JFrame implements FocusListener{
 	}
 
 	private void updateFields() {
-	    jCost.setText("" + cost);
+	    jCost.setText("" + fuelCost.getCost());
 	    title.setText("Wykonano obliczenia. Wprowadz nowe dane:");
 	}
 
@@ -248,12 +249,12 @@ public class SwingMain extends JFrame implements FocusListener{
 		// "UPDATE ADAM.CARDATA SET DLPGON100KM=?" gdy chcemy nadpisac wszystkie wiersze
 		// lub wybieramy wg klucza z WHERE. Nie dziala, gdy brak wierszy
 		{
-			upTable.setDouble(1, fuelCost.getLpgOn100km());
-			upTable.setDouble(2, fuelCost.getLpgPrice());
-			upTable.setDouble(3, fuelCost.getLpgOn100km());
-			upTable.setDouble(4, fuelCost.getPb95On100km());
-			upTable.setDouble(5, fuelCost.getPb95Price());
-			upTable.setDouble(6, fuelCost.getKmOnPB95());
+			upTable.setDouble(1, trip.getLpgOn100km());
+			upTable.setDouble(2, trip.getLpgPrice());
+			upTable.setDouble(3, trip.getLpgOn100km());
+			upTable.setDouble(4, trip.getPb95On100km());
+			upTable.setDouble(5, trip.getPb95Price());
+			upTable.setDouble(6, trip.getKmOnPB95());
 			upTable.executeUpdate();
 			title.setText("Wartości zostały zapisane w bazie danych");
 		} catch (SQLException ole) {
