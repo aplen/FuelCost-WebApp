@@ -7,11 +7,11 @@ public class Program {
 	ProfileBuilder builder = new ProfileBuilderImpl();
 
 	builder.setAge(32);
-	builder.setFizGender(Gender.FEMALE);
-	builder.setHeight(168);
-	builder.setName("Kasia");
+	builder.setFizGender(Gender.MALE);
+	builder.setHeight(175);
+	builder.setName("Adam");
 	builder.setActivity(Activity.LOW);
-	builder.setWeight(90);
+	builder.setWeight(75);
 	
 	Person person = builder.build();
 	System.out.println(person);
