@@ -69,13 +69,13 @@ public class SwingMain extends JFrame implements FocusListener{
 		jCost = new JTextField("0", 10);
 		solutionDesc = new JLabel("Koszt trasy o podanych parametrach wyniesie:");
 		solveButton = new JButton("Oblicz");
-		solveButton.setPreferredSize(new Dimension(80, 60));
+		solveButton.setPreferredSize(new Dimension(100, 60));
 		exitButton = new JButton("Wyjście");
-		exitButton.setPreferredSize(new Dimension(80, 60));
+		exitButton.setPreferredSize(new Dimension(100, 60));
 		saveButton = new JButton("Zapisz");
-		saveButton.setPreferredSize(new Dimension(80, 60));
+		saveButton.setPreferredSize(new Dimension(100, 60));
 		loadButton = new JButton("Wczytaj");
-		loadButton.setPreferredSize(new Dimension(80, 60));
+		loadButton.setPreferredSize(new Dimension(100, 60));
 		jCost.setEditable(false);
 
 		jLpgOn100km.addFocusListener(this); // tworzenie reakcji na klikanie oraz aktywację/deaktywację pól
