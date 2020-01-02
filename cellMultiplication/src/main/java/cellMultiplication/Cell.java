@@ -1,29 +1,37 @@
 package cellMultiplication;
 
-public class Cell implements Cloneable{
-    int numerOrganizmu;
+public class Cell {
     
-    Cell(int numerOrganizmu){
-	this.numerOrganizmu=numerOrganizmu;
+    /**
+     * create single cell with assigned number and ability to clone itself
+     */
+
+   private int cellNumber;
+
+   Cell(){
+    this(1);
+}
+    Cell(int cellNumber) {
+	this.cellNumber = cellNumber;
     }
 
-   
-    public Object split(Object cell) {
+    
+    @Override
+    public Cell clone() {
+	return new Cell(cellNumber);
 
-	try {
-	    cell= this.clone();
-	} catch (CloneNotSupportedException ole) {
-	}
-	return cell;
-	
     }
 
     @Override
     public String toString() {
-	return "Cell [new life=" + numerOrganizmu + "]";
+	return "Cell [new life=" + cellNumber + "]";
     }
-
-   
-
     
+    public int getCellNumber() {
+	    return cellNumber;
+	}
+
+	public void setCellNumber(int cellNumber) {
+	    this.cellNumber = cellNumber;
+	}
 }
