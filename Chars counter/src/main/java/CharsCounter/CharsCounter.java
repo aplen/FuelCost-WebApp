@@ -15,7 +15,7 @@ public class CharsCounter {
 
 	for (int i = 0; i < chars.length; i++) {
 
-	    /*
+	    /**
 	     * za pomoca switch zapobiegamy arrayoutofbound exception gdy różnica wyniesie
 	     * 0, to znak, że trzeba wykonac funkcje ostatni raz i wyjsc za pomoca break
 	     */
