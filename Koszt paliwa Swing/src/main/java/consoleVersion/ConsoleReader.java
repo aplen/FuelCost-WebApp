@@ -1,15 +1,15 @@
 package consoleVersion;
 
 import java.util.InputMismatchException;
-import java.lang.IllegalArgumentException;
 import java.util.Scanner;
 
 public class ConsoleReader {
     /**
-     * ustawia i waliduje wartości pól klasy FuelCost danymi pobranymi od użytkownika za pomocą klasy Scanner
+     * ustawia i waliduje wartości pól klasy Trip danymi pobranymi od użytkownika za
+     * pomocą klasy Scanner
      */
 
-    void retrieveData(Trip trip) {
+    void retrieveDataTo(Trip trip) {
 	Scanner scan = new Scanner(System.in);
 	boolean isNotCorrect = true;
 /*
@@ -41,10 +41,5 @@ public class ConsoleReader {
 		System.out.println("Niepoprawny format danych, wprowadz ponownie");
 	    }
 	} while (isNotCorrect);
-
-	scan.close();
-
-
     }
-
 }

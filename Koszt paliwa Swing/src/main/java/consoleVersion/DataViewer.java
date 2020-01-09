@@ -1,11 +1,13 @@
 package consoleVersion;
 
 public class DataViewer {
-/**
- * Łączy pobrane dane i wynik w String oraz wyświetla użytkownikowi
- *  
- * @param trip
- */
+
+    /**
+     * Łączy pobrane dane i wynik w String oraz wyświetla użytkownikowi
+     * 
+     * @param trip obiekt z danymi do wyświetlenia
+     * @param cost wynik wyliczenia
+     */
      void viewData(Trip trip, double cost){
 	
 	StringBuilder b = new StringBuilder();
