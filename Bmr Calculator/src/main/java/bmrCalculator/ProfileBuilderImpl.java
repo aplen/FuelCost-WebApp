@@ -4,7 +4,7 @@ public class ProfileBuilderImpl implements ProfileBuilder {
 
     private Person person;
 
-    ProfileBuilderImpl() {
+    public ProfileBuilderImpl() {
    	person = new Person();
        }
 

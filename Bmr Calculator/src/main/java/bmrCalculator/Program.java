@@ -4,15 +4,9 @@ public class Program {
 
     public static void main(String[] args) {
 
-	ProfileBuilder builder = new ProfileBuilderImpl();
+	ProfileBuilder builder = new ProfileBuilderImpl().setAge(20).setFizGender(Gender.MALE).setHeight(198)
+		.setName("Krzyś").setActivity(Activity.MEDIUM).setWeight(85);
 
-	builder.setAge(32);
-	builder.setFizGender(Gender.MALE);
-	builder.setHeight(175);
-	builder.setName("Adam");
-	builder.setActivity(Activity.LOW);
-	builder.setWeight(75);
-	
 	Person person = builder.build();
 	System.out.println(person);
 	BmrCalculator calculator = new BmrCalculator();

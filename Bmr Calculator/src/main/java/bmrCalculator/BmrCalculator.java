@@ -4,7 +4,7 @@ public class BmrCalculator {
     double bmr;
     double bmi;
     
-    void countBmi(Person person) {
+    public double countBmi(Person person) {
 	double height = person.getHeight()/100;
 	bmi=person.getWeight()/(height*height);
 	bmi = Math.round(bmi * 100) / 100;
@@ -22,6 +22,7 @@ public class BmrCalculator {
 	    System.out.println("Tak wysokie BMI oznacza otyłość (BMI>=30)");
 	    
 	}
+	return bmi;
     }
     
    private void countPpmBmr(Person person) {
@@ -42,7 +43,8 @@ public class BmrCalculator {
 	bmr = Math.round(bmr * 100) / 100;
 	System.out.println("Twoje PPM/BMR (podstawowa przemiana materii) wynosi: " + bmr+" kcal");
     }
-    void countCpmTmr(Person person) {
+
+    public double countCpmTmr(Person person) {
 	countPpmBmr(person);
 	switch (person.getActivity()) {
 	case NONE:
@@ -63,7 +65,8 @@ public class BmrCalculator {
 	default:
 	}
 	bmr = Math.round(bmr * 100) / 100;
-	System.out.println("Twoje CPM/TMR (całkowita przemiana materii) wynosi: " + bmr+ " kcal");
+	System.out.println("Twoje CPM/TMR (całkowita przemiana materii) wynosi: " + bmr + " kcal");
+	return bmr;
     }
 	
     }
