@@ -3,38 +3,39 @@ package consoleVersion;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class ConsoleReader {
-    /**
-     * ustawia i waliduje wartości pól klasy Trip danymi pobranymi od użytkownika za
-     * pomocą klasy Scanner
-     */
+class ConsoleReader {
+    private Trip trip;
+    private Scanner scan;
 
-    void retrieveDataTo(Trip trip) {
-	Scanner scan = new Scanner(System.in);
+    ConsoleReader(Trip trip) {
+	this.trip = trip;
+    }
+
+    /**
+     * ustawia wartości pól klasy Trip danymi pobranymi od użytkownika za pomocą
+     * klasy Scanner
+     * 
+     */
+    void retrieveDataTo() {
 	boolean isNotCorrect = true;
-/*
- * pobieranie danych od użytkownika w pętli, która wykonuje się dopóki wszystkie pola nie zostaną wypełnione poprawnymi wartościami
- * dane są przekazywane do klasy Trip
- * 
- */
+
 	do {
 	    try {
-		
+		scan = new Scanner(System.in);
 		System.out.print("Podaj szacowane średnie spalanie benzyny (w litrach/100km) w Twoim samochodzie \n"
 			+ "wez pod uwagę charakter trasy, którą chcesz pokonać:");
-		
-		trip.setPb95On100km(scan.nextDouble());
+		trip.setPbOn100Km(scan.nextDouble());
 		System.out.print("Podaj szacowane średnie spalanie LPG (w litrach/100km) w Twoim samochodzie \n"
 			+ "wez pod uwagę charakter trasy, którą chcesz pokonać:");
-		trip.setLpgOn100km(scan.nextDouble());
+		trip.setLpgOn100Km(scan.nextDouble());
 		System.out.print("Ile kosztuje litr benzyny?");
-		trip.setPb95Price(scan.nextDouble());
+		trip.setPbPrice(scan.nextDouble());
 		System.out.print("Ile kosztuje litr LPG?");
 		trip.setLpgPrice(scan.nextDouble());
 		System.out.print("Ile km przejedziesz na LPG?");
-		trip.setKmOnLPG(scan.nextDouble());
+		trip.setKmOnLpg(scan.nextDouble());
 		System.out.print("Ile km przejedziesz na benzynie?");
-		trip.setKmOnPB95(scan.nextDouble());
+		trip.setKmOnPb(scan.nextDouble());
 
 		isNotCorrect = false;
 	    } catch (InputMismatchException | IllegalArgumentException e1) {

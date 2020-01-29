@@ -2,13 +2,15 @@ package consoleVersion;
 
 public class FuelCost {
 
-
+    private Trip trip;
     private double cost;
+
+    public FuelCost(Trip trip) {
+	this.trip = trip;
+    }
+
     public double getCost() {
         return cost;
-    }
-    public void setCost(double cost) {
-        this.cost = cost;
     }
 
     /**
@@ -16,9 +18,9 @@ public class FuelCost {
      * 
      * @return cost
      */
-    public  double calculateFuelCost(Trip trip) {
-	cost =  (Math.round((trip.getLpgOn100km() *trip.getLpgPrice()* trip.getKmOnLPG() / 100 + trip.getPb95On100km() * trip.getPb95Price()
-		* trip.getKmOnPB95() / 100) * 100.0))
+    public double calculateFuelCost() {
+	cost =  (Math.round((trip.getLpgOn100Km() *trip.getLpgPrice()* trip.getKmOnLpg() / 100 + trip.getPbOn100Km() * trip.getPbPrice()
+		* trip.getKmOnPb() / 100) * 100.0))
 		/ 100.0;
 	
 	return cost;

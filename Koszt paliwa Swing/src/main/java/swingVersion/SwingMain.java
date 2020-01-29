@@ -20,6 +20,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -35,8 +36,9 @@ public class SwingMain extends JFrame implements FocusListener{
     	
     	
 	private static final long serialVersionUID = 1L;
-	FuelCost fuelCost = new FuelCost();
 	Trip trip = new Trip();
+    FuelCost fuelCost = new FuelCost(trip);
+
 	private JTextField jLpgOn100km, jLpgPrice, jKmOnLPG, jPb95On100km, jPb95Price, jKmOnPB95, jCost;
 	private JLabel title, title1, lpgOn100kmDesc, lpgPriceDesc, kmOnLPGDesc, pb95On100kmDesc, pb95PriceDesc,
 			kmOnPB95Desc, solutionDesc;
@@ -138,7 +140,7 @@ public class SwingMain extends JFrame implements FocusListener{
 		if (source == solveButton) {
 		    
 		    	parseInput();
-			fuelCost.calculateFuelCost(trip);
+	    fuelCost.calculateFuelCost();
 			updateFields();
 		}
 		if (source == exitButton) {
@@ -168,7 +170,7 @@ public class SwingMain extends JFrame implements FocusListener{
 	    title1.setText("");
 		title.setText(" ");
 		try {
-			trip.setLpgOn100km(Double.parseDouble(jLpgOn100km.getText()));
+			trip.setLpgOn100Km(Double.parseDouble(jLpgOn100km.getText()));
 		} catch (IllegalArgumentException e) {
 			title.setText("Błędny format danych! Wprowadz ponownie:");
 			jLpgOn100km.setText("0.00");
@@ -180,25 +182,25 @@ public class SwingMain extends JFrame implements FocusListener{
 			jLpgPrice.setText("0.00");
 		}
 		try {
-		    trip.setKmOnLPG(Double.parseDouble(jKmOnLPG.getText()));
+		    trip.setKmOnLpg(Double.parseDouble(jKmOnLPG.getText()));
 		} catch (IllegalArgumentException e) {
 		    title.setText("Błędny format danych! Wprowadz ponownie:");
 			jKmOnLPG.setText("0.00");
 		}
 		try {
-			trip.setPb95On100km(Double.parseDouble(jPb95On100km.getText()));
+			trip.setPbOn100Km(Double.parseDouble(jPb95On100km.getText()));
 		} catch (IllegalArgumentException e) {
 		    title.setText("Błędny format danych! Wprowadz ponownie:");
 			jPb95On100km.setText("0.00");
 		}
 		try {
-			trip.setPb95Price(Double.parseDouble(jPb95Price.getText()));
+			trip.setPbPrice(Double.parseDouble(jPb95Price.getText()));
 		} catch (IllegalArgumentException e) {
 		    title.setText("Błędny format danych! Wprowadz ponownie:");
 			jPb95Price.setText("0.00");
 		}
 		try {
-			trip.setKmOnPB95(Double.parseDouble(jKmOnPB95.getText()));
+			trip.setKmOnPb(Double.parseDouble(jKmOnPB95.getText()));
 		} catch (IllegalArgumentException e) {
 		    title.setText("Błędny format danych! Wprowadz ponownie:");
 			jKmOnPB95.setText("0.00");
@@ -249,12 +251,12 @@ public class SwingMain extends JFrame implements FocusListener{
 		// "UPDATE ADAM.CARDATA SET DLPGON100KM=?" gdy chcemy nadpisac wszystkie wiersze
 		// lub wybieramy wg klucza z WHERE. Nie dziala, gdy brak wierszy
 		{
-			upTable.setDouble(1, trip.getLpgOn100km());
+			upTable.setDouble(1, trip.getLpgOn100Km());
 			upTable.setDouble(2, trip.getLpgPrice());
-			upTable.setDouble(3, trip.getLpgOn100km());
-			upTable.setDouble(4, trip.getPb95On100km());
-			upTable.setDouble(5, trip.getPb95Price());
-			upTable.setDouble(6, trip.getKmOnPB95());
+			upTable.setDouble(3, trip.getLpgOn100Km());
+			upTable.setDouble(4, trip.getPbOn100Km());
+			upTable.setDouble(5, trip.getPbPrice());
+			upTable.setDouble(6, trip.getKmOnPb());
 			upTable.executeUpdate();
 			title.setText("Wartości zostały zapisane w bazie danych");
 		} catch (SQLException ole) {

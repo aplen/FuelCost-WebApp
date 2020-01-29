@@ -1,31 +1,25 @@
 package consoleVersion;
 
 public class DataViewer {
+    private Trip trip;
+    private FuelCost fuelCost;
+
+    DataViewer(Trip trip, FuelCost fuelCost) {
+	this.trip = trip;
+	this.fuelCost = fuelCost;
+    }
 
     /**
      * Łączy pobrane dane i wynik w String oraz wyświetla użytkownikowi
      * 
-     * @param trip obiekt z danymi do wyświetlenia
      * @param cost wynik wyliczenia
      */
-     void viewData(Trip trip, double cost){
+    void viewData() {
 	
 	StringBuilder b = new StringBuilder();
-	
-	b.append("Cena LPG za 1 litr: ");
-	b.append(trip.getLpgPrice());
-	b.append(" PLN\nCena benzyny za 1 litr: ");
-	b.append(trip.getPb95Price());
-	b.append(" PLN\n");
-	b.append(trip.getKmOnLPG());
-	b.append(" kilometrów na LPG\n");
-	b.append(trip.getKmOnPB95());
-	b.append(" kilometrów na benzynie\n");
-	b.append(trip.getLpgOn100km());
-	b.append(" - spalanie LPG na 100km\n");
-	b.append(trip.getPb95On100km());
-	b.append(" - spalanie benzyny na 100km\nKoszt podróży wyniesie ");
-	b.append(cost);
+	b.append(trip);
+	b.append("Koszt podróży wyniesie ");
+	b.append(fuelCost.getCost());
 	b.append(" PLN");
 	System.out.println(b.substring(0));
     }

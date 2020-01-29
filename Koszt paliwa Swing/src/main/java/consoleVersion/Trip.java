@@ -2,18 +2,18 @@ package consoleVersion;
 
 public class Trip {
 
-    private double lpgOn100km, lpgPrice, kmOnLPG, pb95On100km, pb95Price, kmOnPB95;
+    private double lpgOn100Km, lpgPrice, kmOnLpg, pbOn100Km, pbPrice, kmOnPb;
 
-    public double getLpgOn100km() {
-	return lpgOn100km;
+    public double getLpgOn100Km() {
+	return lpgOn100Km;
     }
 
-    public void setLpgOn100km(double lpgOn100km) throws IllegalArgumentException {
+    public void setLpgOn100Km(double lpgOn100Km) throws IllegalArgumentException {
 
-	if (lpgOn100km < 0) {
+	if (lpgOn100Km < 0) {
 	    throw new IllegalArgumentException();
 	} else {
-	    this.lpgOn100km = lpgOn100km;
+	    this.lpgOn100Km = lpgOn100Km;
 	}
     }
 
@@ -21,7 +21,7 @@ public class Trip {
 	return lpgPrice;
     }
 
-    public void setLpgPrice(double lpgPrice) throws IllegalArgumentException{
+    public void setLpgPrice(double lpgPrice) throws IllegalArgumentException {
 	if (lpgPrice < 0) {
 	    throw new IllegalArgumentException();
 	} else {
@@ -30,53 +30,74 @@ public class Trip {
 
     }
 
-    public double getKmOnLPG() {
-	return kmOnLPG;
+    public double getKmOnLpg() {
+	return kmOnLpg;
     }
 
-    public void setKmOnLPG(double kmOnLPG) throws IllegalArgumentException{
-	if (kmOnLPG < 0) {
+    public void setKmOnLpg(double kmOnLpg) throws IllegalArgumentException {
+	if (kmOnLpg < 0) {
 	    throw new IllegalArgumentException();
 	} else {
-	    this.kmOnLPG = kmOnLPG;
+	    this.kmOnLpg = kmOnLpg;
 	}
 
     }
 
-    public double getPb95On100km() {
-	return pb95On100km;
+    public double getPbOn100Km() {
+	return pbOn100Km;
     }
 
-    public void setPb95On100km(double pb95On100km) throws IllegalArgumentException{
-	if (pb95On100km < 0) {
+    public void setPbOn100Km(double pbOn100Km) throws IllegalArgumentException {
+	if (pbOn100Km < 0) {
 	    throw new IllegalArgumentException();
 	} else {
-	    this.pb95On100km = pb95On100km;
+	    this.pbOn100Km = pbOn100Km;
 	}
     }
 
-    public double getPb95Price() {
-	return pb95Price;
+    public double getPbPrice() {
+	return pbPrice;
     }
 
-    public void setPb95Price(double pb95Price) throws IllegalArgumentException{
-	if (pb95Price < 0) {
+    public void setPbPrice(double pbPrice) throws IllegalArgumentException {
+	if (pbPrice < 0) {
 	    throw new IllegalArgumentException();
 	} else {
-	    this.pb95Price = pb95Price;
+	    this.pbPrice = pbPrice;
 	}
     }
 
-    public double getKmOnPB95() {
-	return kmOnPB95;
+    public double getKmOnPb() {
+	return kmOnPb;
     }
 
-    public void setKmOnPB95(double kmOnPB95) throws IllegalArgumentException{
-	if (kmOnPB95 < 0) {
+    public void setKmOnPb(double kmOnPb) throws IllegalArgumentException {
+	if (kmOnPb < 0) {
 	    throw new IllegalArgumentException();
 	} else {
-	    this.kmOnPB95 = kmOnPB95;
+	    this.kmOnPb = kmOnPb;
 	}
+    }
+
+    @Override
+    public String toString() {
+
+	StringBuilder b = new StringBuilder();
+
+	b.append("Cena LPG za 1 litr: ");
+	b.append(lpgPrice);
+	b.append(" PLN\nCena benzyny za 1 litr: ");
+	b.append(pbPrice);
+	b.append(" PLN\n");
+	b.append(kmOnLpg);
+	b.append(" kilometrów na LPG\n");
+	b.append(kmOnPb);
+	b.append(" kilometrów na benzynie\n");
+	b.append(lpgOn100Km);
+	b.append(" - spalanie LPG na 100km\n");
+	b.append(pbOn100Km);
+	b.append(" - spalanie benzyny na 100km\n");
+	return b.substring(0);
     }
 
 }
