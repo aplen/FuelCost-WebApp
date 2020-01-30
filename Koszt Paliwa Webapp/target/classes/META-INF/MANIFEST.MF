@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-Built-By: Adam
-Build-Jdk: 12.0.2
-Main-Class: io.github.plindzek.App
-Created-By: Maven Integration for Eclipse
-
