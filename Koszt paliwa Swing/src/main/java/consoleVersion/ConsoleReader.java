@@ -16,7 +16,7 @@ class ConsoleReader {
      * klasy Scanner
      * 
      */
-    void retrieveDataTo() {
+    public void getData() {
 	boolean isNotCorrect = true;
 
 	do {

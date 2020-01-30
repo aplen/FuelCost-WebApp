@@ -14,7 +14,7 @@ public class FuelCost {
     }
 
     /**
-     * oblicza i zwraca koszt paliwa dla obiektu klasy Trip
+     * oblicza koszt paliwa
      * 
      * @return cost
      */

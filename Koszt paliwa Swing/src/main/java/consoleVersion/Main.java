@@ -7,8 +7,9 @@ public class Main {
     public static void main(String[] args) {
 	var trip = new Trip();
 
-	var cr = new ConsoleReader(trip);
-	cr.retrieveDataTo();
+	var consoleReader = new ConsoleReader(trip);
+	consoleReader.getData();
+
 
 	var fuelCost = new FuelCost(trip);
 	fuelCost.calculateFuelCost();
