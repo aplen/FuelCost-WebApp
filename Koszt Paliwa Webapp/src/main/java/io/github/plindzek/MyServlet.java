@@ -12,8 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * servlet pod adresem localhost:8080/api/ metoda doGet odpala się automatycznie
- * obsługiwany przez service z MyService
+ * servlet at the localhost:8080/api/ method doGet runs automatic by Jetty. It
+ * use MyService class to give response
  * 
  * @author Adam
  *

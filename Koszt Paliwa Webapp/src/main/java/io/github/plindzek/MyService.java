@@ -3,12 +3,14 @@ package io.github.plindzek;
 import java.util.Optional;
 
 /**
- * @author Adam servis z logiką biznesową do servletu MyServlet
+ * Service with bussiness logic for MyServlet
+ * 
+ * @author Adam
  */
 class MyService {
 
     /**
-     * domyslna wartosc, gdy nie otrzymamy "name" w requescie i jest null
+     * default value, when we dont receive "name" in request and we have null
      */
     private static final String FALLBACK_NAME = "add \"?name=your name\" at the end of this site address";
 
