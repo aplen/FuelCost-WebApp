@@ -3,27 +3,68 @@
   <groupId>io.github.plindzek</groupId>
   <artifactId>FuelCostWebapp</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
   <name>Fuel Cost</name>
   <description>my first webapp</description>
   
 <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>11</java.version>
+        <java.version></java.version>
         <junit.version>4.13</junit.version>
     </properties>
 
     <dependencies>
+    
+    <!-- testy -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        
+    <!-- http -->
+        <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>javax.servlet-api</artifactId>
+    <version>4.0.1</version>
+    <scope>compile</scope>
+</dependency>
+<dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-plus</artifactId>
+            <version>9.4.26.v20200117</version>
+        </dependency>
+        <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-annotations</artifactId>
+        <version>9.4.26.v20200117</version>
+        </dependency>
+    
+    <!-- logowanie -->    
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-api</artifactId>
+    <version>2.0.0-alpha1</version>
+</dependency>
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-simple</artifactId>
+    <version>2.0.0-alpha1</version>
+</dependency>
     </dependencies>
 
     <build>
         <plugins>
+        <plugin>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>9.4.26.v20200117</version>
+        </plugin>
+        
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -41,8 +82,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <source>12</source>
+                    <target>12</target>
                 </configuration>
             </plugin>
         </plugins>
