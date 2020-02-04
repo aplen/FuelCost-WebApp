@@ -41,6 +41,13 @@
         <artifactId>jetty-annotations</artifactId>
         <version>9.4.26.v20200117</version>
         </dependency>
+   <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+<dependency>
+    <groupId>org.jsoup</groupId>
+    <artifactId>jsoup</artifactId>
+    <version>1.11.3</version>
+</dependency>
+   
     
     <!-- logowanie -->    
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
@@ -61,6 +68,11 @@
 <artifactId>h2</artifactId>
 <version>1.4.200</version>
 </dependency>
+ <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.4.10.Final</version>
+        </dependency>
     </dependencies>
 
     <build>
