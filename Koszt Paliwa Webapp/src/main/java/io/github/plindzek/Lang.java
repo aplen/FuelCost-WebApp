@@ -3,24 +3,12 @@
  */
 package io.github.plindzek;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
-
 /**
  * @author Adam
  *
  */
-@Entity
-@Table(name = "languages")
-class Lang {
 
-    @Id
-    @GeneratedValue(generator = "inc")
-    @GenericGenerator(name = "inc", strategy = "increment")
+class Lang {
     private Integer langId;
     private String welcomeMsg;
     private String langCode;
@@ -29,12 +17,6 @@ class Lang {
     private String lpgOn100Km, lpgPrice, kmOnLpg, pbOn100Km, pbPrice, kmOnPb;
     private String costDsc;
     private String solveButton, exitButton, saveProfileButton, loadProfileButton;
-
-    /*
-     * Hibernate needs this constructor
-     */
-    Lang() {
-    }
 
     public Lang(Integer langId, String welcomeMsg, String langCode, String carName, String lpgOn100Km, String lpgPrice,
 	    String kmOnLpg, String pbOn100Km, String pbPrice, String kmOnPb, String costDsc, String solveButton,
