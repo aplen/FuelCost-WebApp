@@ -4,6 +4,8 @@ import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.plus.webapp.PlusConfiguration;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.util.component.AbstractLifeCycle;
+import org.eclipse.jetty.util.component.LifeCycle;
 import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.FragmentConfiguration;
 import org.eclipse.jetty.webapp.JettyWebXmlConfiguration;
@@ -48,13 +50,13 @@ public class App {
 	var server = new Server(8080);
 	server.setHandler(webapp);
 
-	// server.addLifeCycleListener(new AbstractLifeCycle.AbstractLifeCycleListener()
-	// {
-	// @Override
-	// public void lifeCycleStopped(LifeCycle event) {
-	// HibernateUtil.close();
-	// }
-	// });
+	// closing Hibernate session when closing server
+	server.addLifeCycleListener(new AbstractLifeCycle.AbstractLifeCycleListener() {
+	    @Override
+	    public void lifeCycleStopped(LifeCycle event) {
+		HibernateUtil.close();
+	    }
+	});
 
 	server.start();
 	server.join();
