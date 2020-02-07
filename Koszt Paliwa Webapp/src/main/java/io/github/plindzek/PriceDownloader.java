@@ -15,6 +15,9 @@ class PriceDownloader {
     
     Document doc;
 
+    /**
+     * download site with actual fuel prices
+     */
     PriceDownloader() {
 	try {
 	    doc = Jsoup.connect("https://www.autocentrum.pl/paliwa/ceny-paliw/")
