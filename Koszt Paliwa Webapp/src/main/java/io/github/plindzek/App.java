@@ -24,24 +24,27 @@ public class App {
 	logger.info("Ten tekst wyswietli się w konsoli");
 
 
-	/*
-	 * tworzymy i konfigurujemy handler
-	 */
+	/** create and configure handler */
 	var webapp = new WebAppContext();
 
-	// ponizsza linijka podpina servlet ale bez obslugi adnotacji
-//        webapp.addServlet(HelloServlet.class, "/api/*");
+	/**
+	 * this line create servlet but without annotations handling we need
+	 * annotations, so its off webapp.addServlet(HelloServlet.class, "/api/*");
+	 */
 
-	/*
-	 * ponizsza linijka pozwala zmieniać plik index.html podczas działania serwera
+	/**
+	 * this line allow to change static files in webapp folder without server
+	 * restart
 	 */
 	webapp.setInitParameter("org.eclipse.jetty.servlet.Default.maxCachedFiles", "0");
 
 	webapp.setResourceBase("src/main/webapp");
-	// webapp.setContextPath("/");
+	webapp.setContextPath("/");
 
-	// konfiguracja z stackoverflow "webapp context configuration embedded servlet
-	// 3.1
+	/**
+	 * configuration from stackoverflow "webapp context configuration embedded
+	 * servlet 3.1"
+	 */
 	webapp.setConfigurations(new Configuration[] { new AnnotationConfiguration(), new WebInfConfiguration(),
 		new WebXmlConfiguration(), new MetaInfConfiguration(), new FragmentConfiguration(),
 		new EnvConfiguration(), new PlusConfiguration(), new JettyWebXmlConfiguration() });
@@ -50,7 +53,7 @@ public class App {
 	var server = new Server(8080);
 	server.setHandler(webapp);
 
-	// closing Hibernate session when closing server
+	/** closing Hibernate session when closing server */
 	server.addLifeCycleListener(new AbstractLifeCycle.AbstractLifeCycleListener() {
 	    @Override
 	    public void lifeCycleStopped(LifeCycle event) {
