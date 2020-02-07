@@ -62,6 +62,12 @@
     <artifactId>slf4j-simple</artifactId>
     <version>2.0.0-alpha1</version>
 </dependency>
+<!--json-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.10.1</version>
+        </dependency>
 <!-- DB -->
 <dependency>
 <groupId>com.h2database</groupId>
