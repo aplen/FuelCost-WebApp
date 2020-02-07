@@ -51,7 +51,7 @@ class MyService {
 	var welcomeMsg = repository.findById(langId).orElse(FALLBACK_LANG).getWelcomeMsg();
 	var nameToWelcome =  Optional.ofNullable(name).orElse(FALLBACK_NAME);
 
-	return welcomeMsg + "<br /><h1>, " + nameToWelcome + "!<h1/>";
+	return welcomeMsg + "<br />" + nameToWelcome + "!";
     }
 
 }
