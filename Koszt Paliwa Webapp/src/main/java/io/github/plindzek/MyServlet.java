@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author Adam
  */
 
-@WebServlet(displayName = "Nazwa z pola displayName (MyServlet)", urlPatterns = { "api/*" }, name = "My Servlet")
+@WebServlet(displayName = "Nazwa z pola displayName (MyServlet)", urlPatterns = { "/api" }, name = "My Servlet")
 public class MyServlet extends HttpServlet {
 
     private final Logger logger = LoggerFactory.getLogger(MyServlet.class);
@@ -26,7 +26,10 @@ public class MyServlet extends HttpServlet {
     private static final String NAME_PARAM = "name";
     private static final String LANG_PARAM = "lang";
 
-    // tworzymy zmienna serwisu powiazanego z servletem
+    /**
+     * define references needed to handle response (eg. service, mapper or
+     * repository)
+     */
     private MyService service;
 
     /*
@@ -44,12 +47,14 @@ public class MyServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 	logger.info("Request got with parameters: " + req.getParameterMap());
-	resp.setContentType("text/html; charset=utf-8");
-
 	String name = req.getParameter(NAME_PARAM);
 	Integer lang = Integer.valueOf(Optional.ofNullable(req.getParameter(LANG_PARAM)).orElse("1"));
+
+	/**
+	 * what we want to do in response to given request
+	 */
+	resp.setContentType("text/html; charset=utf-8");
 	resp.getWriter().println(service.prepareGreeting(name, lang));
 
-	resp.getWriter().write("<br />session=" + req.getSession(true).getId());
     }
 }
