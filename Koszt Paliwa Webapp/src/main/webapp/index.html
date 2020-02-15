@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
  <style>
     body {
@@ -7,20 +7,7 @@
         background-repeat: inherit; 
         background-position: center;
         }
-    form {
-        border-radius: 1em;
-        padding: 1em;
-        position: absolute;
-        top: 30%;
-        left: 60%;
-        margin-right: -50%;
-        transform: translate(-50%, -50%) }
-        div{
-        position: absolute;
-        top: 60%;
-        left: 50%;
-        margin-right: -50%;
-        transform: translate(-50%, -50%) }
+   
   </style>
   
 <head>
@@ -31,51 +18,126 @@ integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr
 </head>
 
 <body>
-<form id="welcome" class="pure-form" style="width:40%;margin:auto">
-    <input type="text" name="name" class="pure-input-rounded" placeholder="name">
+<main style="width: 40%; margin: 0 auto">
+ <div id="welcome" style="text-align: center">
+        <h1>Introduce yourself</h1>
+    </div>
+ <form id="welcomeForm" class="pure-form pure-g pure-form-aligned">
+        <input class="pure-input-rounded pure-u-1" name="name" placeholder="name">
+        <fieldset id="langs" class="pure-u-1 pure-control-group">Loading...</fieldset>
+        <button id="btn" class="pure-button pure-button-primary pure-u-1">Submit</button>
+    </form>
 	
-	<fieldset id="langs"></fieldset>
-    <button id="btn" class="pure-button pure-button-primary">Submit</button>
-    
-</form>
+	 <form id="carForm" class="pure-form" style="display: none; text-align: center">
+        <fieldset>
+            <input id="carText" class="pure-input-rounded pure-input-2-3" placeholder="new CAR">
+            <button id="addCar" class="pure-button pure-button-primary">+</button>
+        </fieldset>
+        <fieldset id="allCars"></fieldset>
+    </form>
+</main>
 
-<div id="resp"
-style="text-align: center;color: #ff0000;">
-</div>
 
 
 <script>
-const API_URL='http://localhost:8080/api';
-const CODE_TO_EMOJI = {
+  (function() {
+    const API_URL = 'http://localhost:8080/api';
+    const CAR_API_URL = `${API_URL}/cars`;
+
+    const carText = document.getElementById('carText');
+
+    fetch(CAR_API_URL)
+      .then(processOkResponse)
+      .then(cars => cars.forEach(createNewCar));
+
+    document.getElementById('addCar').addEventListener('click', (event) => {
+      event.preventDefault();
+      fetch(CAR_API_URL, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text: carText.value })
+      })
+        .then(processOkResponse)
+        .then(createNewCar)
+        .then(() => carText.value = '')
+        .catch(console.warn);
+    });
+
+
+//createNewCar({ id: 1, text: 'Opel mock', lpgPowered: true });
+//{"id":1,"name":"Opel Astra H","lpgPowered":true,"onOn100km":0.0,"lpgOn100Km":10.5,"pbOn100Km":8.0}
+
+    function createNewCar(car) {
+      const label = document.createElement('label');
+      label.classList.add('pure-checkbox');
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.checked = car.lpgPowered;
+      checkbox.addEventListener('click',
+        (event) => {
+          event.preventDefault();
+          fetch(`${CAR_API_URL}/${car.id}`, { method: 'PUT' })
+            .then(processOkResponse)
+            .then(updatedCar => checkbox.checked = !!updatedCar.lpgPowered)
+            .catch(console.warn);
+        });
+      label.appendChild(checkbox);
+      label.appendChild(document.createTextNode(` ${car.name}`));
+      document.getElementById('allCars').appendChild(label);
+    }
+
+    initWelcomeForm();
+
+    function initWelcomeForm() {
+      const CODE_TO_EMOJI = {
         'pl': '🇵🇱',
         'en': '🇺🇸',
         'de': '🇩🇪'
       };
-fetch(`${API_URL}/langs`)
-.then(response=>response.json())
-.then(langArr=>{
-    const checkboxes = langArr.map(lang=>`<label class="pure-radio">
-        <input type="radio" name="lang" value="${lang.langId}" >    
-        ${CODE_TO_EMOJI[lang.langCode]}
-    </label>`)
-    .join('\n');
-     document.getElementById('langs').innerHTML = checkboxes
-}); 
+      fetch(`${API_URL}/langs`)
+        .then(processOkResponse)
+        .then(langArr => {
+          document.getElementById('langs').innerHTML = langArr.map(lang => `
+              <label class="pure-radio">
+                <input type="radio" name="lang" value="${lang.langId}">
+                ${CODE_TO_EMOJI[lang.langCode]}
+              </label>
+          `).join('\n');
+          initWelcomeFormClick();
+        });
+    }
 
-const div = document.getElementById('resp');
-const form = document.getElementById('welcome');
-document.getElementById('btn').addEventListener('click', (event)=> {
-  event.preventDefault(); 
-  const formObj = { 
-	name:form.elements.name.value,
-	lang:form.elements.lang.value
-	};
-  fetch (`${API_URL}?${new URLSearchParams(formObj)}`)
-  .then(response=>response.text())
-  .then((text)=>{div.innerHTML=`<h1>${text}</h1>`
-  });
-});
+    function initWelcomeFormClick() {
+      const welcomeForm = document.getElementById('welcomeForm');
 
+      document.getElementById('btn').addEventListener('click', (event) => {
+        event.preventDefault();
+        const formObj = {
+          name: welcomeForm.elements.name.value,
+          lang: welcomeForm.elements.lang.value
+        };
+        fetch(`${API_URL}?${new URLSearchParams(formObj)}`)
+          .then(response => response.text())
+          .then((text) => {
+            document.getElementById('welcome').innerHTML = `
+                <h1>${text}</h1>
+            `;
+            welcomeForm.remove();
+            document.getElementById('carForm').style.display = 'block';
+          });
+      });
+    }
+
+    function processOkResponse(response = {}) {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error(`Status not 200 (${response.status})`);
+    }
+  })();
 </script>
 </body>
 </html>
