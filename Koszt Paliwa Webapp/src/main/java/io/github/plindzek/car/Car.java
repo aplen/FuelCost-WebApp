@@ -1,7 +1,7 @@
 /**
  * 
  */
-package io.github.plindzek;
+package io.github.plindzek.car;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +16,7 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 @Table(name = "Car")
-public class Car {
+class Car {
     
     @Id
     @GeneratedValue(generator = "inc")
