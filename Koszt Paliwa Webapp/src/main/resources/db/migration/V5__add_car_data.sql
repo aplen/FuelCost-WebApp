@@ -1,0 +1,2 @@
+insert into car (name, lpgPowered, onOn100km, lpgOn100Km, pbOn100Km) values ('Opel Astra H', 1, 0, 10.5, 8.00);
+insert into car (name, lpgPowered, onOn100km, lpgOn100Km, pbOn100Km) values ('Beemka', 0, 6.4, 0.00, 0.00);
