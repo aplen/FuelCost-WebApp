@@ -1,6 +1,7 @@
-package io.github.plindzek;
+package io.github.plindzek.Fuelcost;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,49 +12,49 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 /**
  * servlet at the localhost:8080/api/ method doGet runs automatic by Jetty. It
  * use MyService class to give response
  * @author Adam
  */
 
-@WebServlet(displayName = "Lang Servlet", urlPatterns = { "/api/langs" }, name = "Lang Servlet")
-public class LangServlet extends HttpServlet {
+@WebServlet(displayName = "Nazwa z pola displayName (MyServlet)", urlPatterns = { "/api" }, name = "My Servlet")
+public class MyServlet extends HttpServlet {
 
-    private final Logger logger = LoggerFactory.getLogger(LangServlet.class);
+    private final Logger logger = LoggerFactory.getLogger(MyServlet.class);
+    // defniujemy parametry, jakich sie spodziewamy w requeście
+    private static final String NAME_PARAM = "name";
+    private static final String LANG_PARAM = "lang";
 
     /**
      * define references needed to handle response (eg. service, mapper or
      * repository)
      */
-    private LangRepository repository;
-    private ObjectMapper mapper;
+    private MyService service;
+
     /*
      * servlet container needs it
      */
-    public LangServlet() {
-	this(new LangRepository(), new ObjectMapper());
+    public MyServlet() {
+	this(new MyService());
     }
 
-    LangServlet(LangRepository repository, ObjectMapper mapper) {
-	this.repository = repository;
-	this.mapper = mapper;
+    MyServlet(MyService service) {
+	this.service = service;
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 	logger.info("Request got with parameters: " + req.getParameterMap());
+	String name = req.getParameter(NAME_PARAM);
+	Integer lang = Integer.valueOf(Optional.ofNullable(req.getParameter(LANG_PARAM)).orElse("1"));
 
 	/**
 	 * what we want to do in response to given request
 	 */
 	resp.setContentType("text/html; charset=utf-8");
-	mapper.writeValue(resp.getOutputStream(), repository.findAll());
-
-	// resp.getWriter().println(service.prepareGreeting(name, lang));
+	resp.getWriter().println(service.prepareGreeting(name, lang));
 
     }
 }

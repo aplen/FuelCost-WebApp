@@ -29,7 +29,8 @@ public class App {
 
 	/**
 	 * this line create servlet but without annotations handling we need
-	 * annotations, so its off webapp.addServlet(HelloServlet.class, "/api/*");
+	 * annotations, so its off
+	 * webapp.addServlet(HelloServlet.class, "/api/*");
 	 */
 
 	/**

@@ -9,13 +9,13 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
  * util class ensure static methods to create and close Hibernate sessions
  *
  */
-class HibernateUtil {
+public class HibernateUtil {
     private static final SessionFactory sessionFactory = buildSessionFactory();
 
     private HibernateUtil() {
     }
 
-    static SessionFactory getSessionFactory() { return sessionFactory; }
+    public static SessionFactory getSessionFactory() { return sessionFactory; }
 
     private static SessionFactory buildSessionFactory() {
 	// A SessionFactory is set up once for an application!

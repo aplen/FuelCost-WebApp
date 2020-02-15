@@ -1,7 +1,7 @@
 /**
  * 
  */
-package io.github.plindzek;
+package io.github.plindzek.Fuelcost;
 
 /**
  * @author Adam

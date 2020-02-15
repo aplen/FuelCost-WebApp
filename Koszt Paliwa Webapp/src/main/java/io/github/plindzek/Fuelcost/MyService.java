@@ -1,4 +1,7 @@
-package io.github.plindzek;
+package io.github.plindzek.Fuelcost;
+
+import io.github.plindzek.lang.Lang;
+import io.github.plindzek.lang.LangRepository;
 
 import java.util.Optional;
 
