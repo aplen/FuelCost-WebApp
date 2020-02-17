@@ -29,10 +29,20 @@ integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr
     </form>
 	
 	 <form id="carForm" class="pure-form" style="display: none; text-align: center">
-        <fieldset>
-            <input id="carText" class="pure-input-rounded pure-input-2-3" placeholder="new CAR">
-            <button id="addCar" class="pure-button pure-button-primary">+</button>
+        <br>
+            <input id="carText" class="pure-input-rounded pure-input-2-3" placeholder="car name">
+
+            <input id="pbOn100Km" class="pure-input-rounded pure-input-2-3" placeholder="PB consumption/100 km">
+            <input id="lpgOn100Km" class="pure-input-rounded pure-input-2-3" placeholder="LPG consumption/100 km">
+            <input id="onOn100Km" class="pure-input-rounded pure-input-2-3" placeholder="ON consumption/100 km">
+        </br><button id="addCar" class="pure-button pure-button-primary">save car</button>
         </fieldset>
+         <fieldset>
+             <input id="kmOnPB" class="pure-input-rounded pure-input-2-3" placeholder="ile km na PB">
+             <input id="kmOnLPG" class="pure-input-rounded pure-input-2-3" placeholder="ile km na LPG">
+             <input id="kmOnON" class="pure-input-rounded pure-input-2-3" placeholder="ile km na ON">
+             </br><button id="aaa" class="pure-button pure-button-primary">wyczyść</button>
+         </fieldset>
         <fieldset id="allCars"></fieldset>
     </form>
 </main>
