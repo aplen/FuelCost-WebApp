@@ -58,9 +58,5 @@ public class LangServlet extends HttpServlet {
         //mapper convert langDTO object to JSON and send to frontend
 
         mapper.writeValue(resp.getOutputStream(), service.findAll());
-        //method below printed response directly on the our webpage
-        //but now we send an object, not text
-        // resp.getWriter().println(service.prepareGreeting(name, lang));
-
     }
 }
