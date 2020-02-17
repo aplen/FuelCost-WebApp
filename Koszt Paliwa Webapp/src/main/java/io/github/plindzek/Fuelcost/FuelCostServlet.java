@@ -18,10 +18,10 @@ import org.slf4j.LoggerFactory;
  * @author Adam
  */
 
-@WebServlet(displayName = "Nazwa z pola displayName (MyServlet)", urlPatterns = { "/api" }, name = "My Servlet")
-public class MyServlet extends HttpServlet {
+@WebServlet(displayName = "Nazwa z pola displayName FuelCostServlet", urlPatterns = { "/api" }, name = "FuelCost Servlet")
+public class FuelCostServlet extends HttpServlet {
 
-    private final Logger logger = LoggerFactory.getLogger(MyServlet.class);
+    private final Logger logger = LoggerFactory.getLogger(FuelCostServlet.class);
     // defniujemy parametry, jakich sie spodziewamy w requeście
     private static final String NAME_PARAM = "name";
     private static final String LANG_PARAM = "lang";
@@ -30,16 +30,16 @@ public class MyServlet extends HttpServlet {
      * define references needed to handle response (eg. service, mapper or
      * repository)
      */
-    private MyService service;
+    private PbCostService service;
 
     /*
      * servlet container needs it
      */
-    public MyServlet() {
-	this(new MyService());
+    public FuelCostServlet() {
+	this(new PbCostService());
     }
 
-    MyServlet(MyService service) {
+    FuelCostServlet(PbCostService service) {
 	this.service = service;
     }
 
@@ -53,7 +53,9 @@ public class MyServlet extends HttpServlet {
 	/**
 	 * what we want to do in response to given request
 	 */
-	resp.setContentType("text/html; charset=utf-8");
+
+
+        resp.setContentType("text/html; charset=utf-8");
 	resp.getWriter().println(service.prepareGreeting(name, lang));
 
     }

@@ -24,7 +24,7 @@ class Car {
     private Integer id;
     private String name;
     private boolean lpgPowered;
-    private double onOn100km;
+    private double onOn100Km;
     private double lpgOn100Km;
     private double pbOn100Km;
 
@@ -51,9 +51,9 @@ class Car {
 
     public void setLpgPowered(boolean lpgPowered) { this.lpgPowered = lpgPowered; }
 
-    public double getOnOn100km() { return onOn100km; }
+    public double getOnOn100Km() { return onOn100Km; }
 
-    public void setOnOn100km(double onOn100km) { this.onOn100km = onOn100km; }
+    public void setOnOn100Km(double onOn100Km) { this.onOn100Km = onOn100Km; }
 
     public double getLpgOn100Km() { return lpgOn100Km; }
 

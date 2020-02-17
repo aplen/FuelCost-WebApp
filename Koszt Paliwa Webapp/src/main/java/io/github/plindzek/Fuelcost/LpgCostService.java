@@ -10,7 +10,7 @@ import java.util.Optional;
  * 
  * @author Adam
  */
-class MyService {
+class LpgCostService {
 
     /**
      * default value, when we dont receive "name" in request and we have null
@@ -27,11 +27,11 @@ class MyService {
 
     private LangRepository repository;
 
-    MyService() {
+    LpgCostService() {
 	this(new LangRepository());
     }
 
-    MyService(LangRepository langRepository) {
+    LpgCostService(LangRepository langRepository) {
 	this.repository = repository;
 
     }
@@ -56,5 +56,17 @@ class MyService {
 
 	return welcomeMsg + "<br />" + nameToWelcome + "!";
     }
+
+    //    private double lpgPrice;
+//    private double pbPrice;
+//    private double kmOnLpg;
+//    private double kmOnPb;
+//    private double cost;
+
+//    public double calculateFuelCost() {
+//	cost =  (Math.round((getLpgOn100Km() *getLpgPrice()* getKmOnLpg() / 100 + getPbOn100Km() * getPbPrice()
+//		* getKmOnPb() / 100) * 100.0))
+//		/ 100.0;
+
 
 }
