@@ -1,5 +1,6 @@
 package io.github.plindzek;
 
+import io.github.plindzek.util.HibernateUtil;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.plus.webapp.PlusConfiguration;
