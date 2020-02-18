@@ -1,62 +1,68 @@
-package io.github.plindzek.Fuelcost;
+package io.github.plindzek.fuelcost;
 
-import java.io.IOException;
-import java.util.Optional;
+import io.github.plindzek.Trip;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.IOException;
 
 /**
- * servlet at the localhost:8080/api/ method doGet runs automatic by Jetty. It
- * use MyService class to give response
  * @author Adam
  */
 
-@WebServlet(displayName = "Nazwa z pola displayName FuelCostServlet", urlPatterns = { "/api" }, name = "FuelCost Servlet")
+@WebServlet(displayName = "FuelCost Servlet", urlPatterns = {"/api/fuelcost/*"}, name = "FuelCost Servlet")
 public class FuelCostServlet extends HttpServlet {
 
-    private final Logger logger = LoggerFactory.getLogger(FuelCostServlet.class);
-    // defniujemy parametry, jakich sie spodziewamy w requeście
-    private static final String NAME_PARAM = "name";
-    private static final String LANG_PARAM = "lang";
+    private final Logger logger = LoggerFactory.getLogger(io.github.plindzek.fuelcost.FuelCostServlet.class);
+    private static final String KM_ON_LPG_PARAM = "kmOnLpg";
+    private static final String KM_ON_PB_PARAM = "kmOnPb";
+    private static final String KM_ON_ON_PARAM = "kmOnOn";
 
     /**
      * define references needed to handle response (eg. service, mapper or
      * repository)
      */
-    private PbCostService service;
+    private FuelCostService fuelCostService;
 
     /*
      * servlet container needs it
      */
     public FuelCostServlet() {
-	this(new PbCostService());
+        this(new FuelCostService());
     }
 
-    FuelCostServlet(PbCostService service) {
-	this.service = service;
+    FuelCostServlet(FuelCostService fuelCostService) {
+        this.fuelCostService = fuelCostService;
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-	logger.info("Request got with parameters: " + req.getParameterMap());
-	String name = req.getParameter(NAME_PARAM);
-	Integer lang = Integer.valueOf(Optional.ofNullable(req.getParameter(LANG_PARAM)).orElse("1"));
-
-	/**
-	 * what we want to do in response to given request
-	 */
-
-
+        logger.info("Request got with parameters: " + req.getParameterMap());
+        var kmOnLpg = req.getParameter(KM_ON_LPG_PARAM);
+        var kmOnPb = req.getParameter(KM_ON_PB_PARAM);
+        var kmOnOn = req.getParameter(KM_ON_ON_PARAM);
+        /**
+         * what we want to do in response to given request
+         */
         resp.setContentType("text/html; charset=utf-8");
-	resp.getWriter().println(service.prepareGreeting(name, lang));
+        //resp.setContentType("application/json; charset=utf-8");
+        //new trip/calc/print in resp
+        Trip trip = new Trip();
+        trip.setKmOnPb(Double.parseDouble(kmOnPb));
+        trip.setKmOnLpg(Double.parseDouble(kmOnLpg));
+        trip.setKmOnOn(Double.parseDouble(kmOnOn));
 
+        double wynik = fuelCostService.calcCost();
+
+        System.out.println(wynik);
     }
 }
+
+
+
