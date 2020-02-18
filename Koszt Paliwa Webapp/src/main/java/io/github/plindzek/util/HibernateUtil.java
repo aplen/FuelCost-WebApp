@@ -1,4 +1,4 @@
-package io.github.plindzek;
+package io.github.plindzek.util;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -32,7 +32,7 @@ public class HibernateUtil {
 	}
     }
 
-    static void close() {
+    public static void close() {
 		if ( sessionFactory != null ) {
 			sessionFactory.close();
 		}
