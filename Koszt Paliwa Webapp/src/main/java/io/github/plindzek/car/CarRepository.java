@@ -3,9 +3,7 @@
  */
 package io.github.plindzek.car;
 
-import io.github.plindzek.HibernateUtil;
-import io.github.plindzek.car.Car;
-import io.github.plindzek.lang.Lang;
+import io.github.plindzek.util.HibernateUtil;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +13,7 @@ import java.util.Optional;
  * contain methods to execute CRUD operations on car table
  *
  */
-public class CarRepository {
+class CarRepository {
 
 	List<Car> findAll() {
 		var session = HibernateUtil.getSessionFactory().openSession();
