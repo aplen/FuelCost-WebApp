@@ -12,7 +12,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 /**
  * @author Adam
- *
  */
 @Entity
 @Table(name = "languages")
@@ -22,9 +21,9 @@ public class Lang {
     @GeneratedValue(generator = "inc")
     @GenericGenerator(name = "inc", strategy = "increment")
     private Integer langId;
-    private String welcomeMsg;
     private String langCode;
 
+    private String welcomeMsg;
     private String carName;
     private String lpgOn100Km, lpgPrice, kmOnLpg, pbOn100Km, pbPrice, kmOnPb;
     private String costDsc;

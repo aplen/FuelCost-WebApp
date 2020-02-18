@@ -3,7 +3,7 @@
  */
 package io.github.plindzek.lang;
 
-import io.github.plindzek.HibernateUtil;
+import io.github.plindzek.util.HibernateUtil;
 
 import java.util.List;
 import java.util.Optional;
