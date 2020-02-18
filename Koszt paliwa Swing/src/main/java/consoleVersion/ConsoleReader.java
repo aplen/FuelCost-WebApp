@@ -3,7 +3,7 @@ package consoleVersion;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-class ConsoleReader {
+public class ConsoleReader {
     private Trip trip;
     private Scanner scan;
 

@@ -1,6 +1,6 @@
 package consoleVersion;
 
-public class DataViewer {
+class DataViewer {
     private Trip trip;
     private FuelCost fuelCost;
 
