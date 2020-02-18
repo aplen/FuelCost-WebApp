@@ -16,7 +16,7 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 @Table(name = "Car")
-class Car {
+public class Car {
     
     @Id
     @GeneratedValue(generator = "inc")
@@ -31,7 +31,7 @@ class Car {
     /*
      * Hibernate needs this constructor
      */
-    Car() {
+    public Car() {
     }
 
     @Override
