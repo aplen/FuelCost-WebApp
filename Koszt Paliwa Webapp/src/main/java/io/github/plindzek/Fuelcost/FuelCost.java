@@ -1,6 +1,9 @@
-package io.github.plindzek.Fuelcost;
+package io.github.plindzek.fuelcost;
 
-public interface FuelCost {
+import io.github.plindzek.car.Car;
+import io.github.plindzek.Trip;
 
-    double calculateFuelCost();
+interface FuelCost {
+
+    double calculateFuelCost(Car car, Trip trip);
 }
