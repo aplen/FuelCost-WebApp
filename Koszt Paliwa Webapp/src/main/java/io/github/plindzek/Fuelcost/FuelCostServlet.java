@@ -1,6 +1,6 @@
 package io.github.plindzek.fuelcost;
 
-import io.github.plindzek.Trip;
+import io.github.plindzek.car.CarRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +28,7 @@ public class FuelCostServlet extends HttpServlet {
      * repository)
      */
     private FuelCostService fuelCostService;
+    private CarRepository repository;
 
     /*
      * servlet container needs it
@@ -44,23 +45,28 @@ public class FuelCostServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         logger.info("Request got with parameters: " + req.getParameterMap());
+
         var kmOnLpg = req.getParameter(KM_ON_LPG_PARAM);
         var kmOnPb = req.getParameter(KM_ON_PB_PARAM);
         var kmOnOn = req.getParameter(KM_ON_ON_PARAM);
-        /**
-         * what we want to do in response to given request
-         */
+        var trip = new Trip();
+        try {
+            trip.setKmOnPb(Double.parseDouble(kmOnPb));
+            trip.setKmOnLpg(Double.parseDouble(kmOnLpg));
+            trip.setKmOnOn(Double.parseDouble(kmOnOn));
+        } catch (NumberFormatException | NullPointerException e) {
+            //e.printStackTrace();
+            resp.getWriter().println("wrong data format");
+        }
+
+        var Car = repository.findByName(name);
+
+
+        double wynik = fuelCostService.calcCost(car, trip);
+        System.out.println(wynik);
         resp.setContentType("text/html; charset=utf-8");
         //resp.setContentType("application/json; charset=utf-8");
-        //new trip/calc/print in resp
-        Trip trip = new Trip();
-        trip.setKmOnPb(Double.parseDouble(kmOnPb));
-        trip.setKmOnLpg(Double.parseDouble(kmOnLpg));
-        trip.setKmOnOn(Double.parseDouble(kmOnOn));
-
-        double wynik = fuelCostService.calcCost();
-
-        System.out.println(wynik);
+        resp.getWriter().write((Double.toString(wynik)));
     }
 }
 
