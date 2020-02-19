@@ -30,19 +30,13 @@ class HelloService {
     HelloService(LangRepository langRepository) {
 	this.repository = repository;
     }
-    /**
-     * @param name
-     * @return welcome message with name and default langId
-     */
-    String prepareGreeting(String name) {
-	return prepareGreeting(name, FALLBACK_LANG.getLangId());
-    }
-    /**
-     * @param name
-     * @return welcome message with name
-     */
+
+    //String prepareGreeting(String name) {
+	//return prepareGreeting(name, FALLBACK_LANG.getLangId());
+    //}
+
     String prepareGreeting(String name, Integer langId) {
-	LangRepository repository = new LangRepository();
+        langId=Optional.ofNullable(langId).orElse(FALLBACK_LANG.getLangId());
 	var welcomeMsg = repository.findById(langId).orElse(FALLBACK_LANG).getWelcomeMsg();
 	var nameToWelcome =  Optional.ofNullable(name).orElse(FALLBACK_NAME);
 
