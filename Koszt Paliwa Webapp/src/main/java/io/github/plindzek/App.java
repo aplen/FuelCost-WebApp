@@ -1,5 +1,6 @@
 package io.github.plindzek;
 
+import io.github.plindzek.util.AvgFuelPricesScrapper;
 import io.github.plindzek.util.HibernateUtil;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
@@ -20,7 +21,7 @@ import org.slf4j.LoggerFactory;
 
 public class App {
     public static void main(String[] args) throws Exception {
-
+		AvgFuelPricesScrapper.getAutocentrum();
 	Logger logger = LoggerFactory.getLogger(App.class);
 	logger.info("Ten tekst wyswietli się w konsoli");
 
