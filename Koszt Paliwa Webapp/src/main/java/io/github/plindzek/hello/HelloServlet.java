@@ -45,20 +45,17 @@ public class HelloServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         logger.info("Request got with parameters: " + req.getParameterMap());
         var name = req.getParameter(NAME_PARAM);
         var lang = req.getParameter(LANG_PARAM);
-        Integer langId = 2;
+        Integer langId=null;
 
         try {
             langId = Integer.valueOf(lang);
         } catch (NumberFormatException e) {
+
             logger.info("Non-numeric language id used: " + lang);
         }
-            /**
-             * what we want to do in response to given request
-             */
             resp.setContentType("text/html; charset=utf-8");
             resp.getWriter().println(service.prepareGreeting(name, langId));
 
