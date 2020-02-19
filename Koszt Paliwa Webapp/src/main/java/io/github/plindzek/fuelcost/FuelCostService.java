@@ -1,23 +1,29 @@
 package io.github.plindzek.fuelcost;
 
-import io.github.plindzek.Trip;
 import io.github.plindzek.car.Car;
+import io.github.plindzek.car.CarRepository;
 
 class FuelCostService {
-Car car;
-Trip Trip;
+
     private FuelCost fuelCost;
 
-    FuelCostService() {
-           }
+//    private CarRepository repository;
+//    FuelCostService(){this(new CarRepository());}
+//
+//    FuelCostService(CarRepository repository){this.repository=repository;}
 
-    double calcCost() {
-
+    public double calcCost(Car car, Trip trip) {
+        if (car.isOnPowered()) {
+            fuelCost = new OnCost();
+        } else {
             if (car.isLpgPowered()) {
-               fuelCost= new LpgCost();
-            } else if (car.getOnOn100Km() > 0) {
-                fuelCost = new OnCost();
-            } else fuelCost =  new PbCost();
-        };}
-
+                fuelCost = new LpgCost();
+            } else {
+                fuelCost = new PbCost();
+            }
+        }
+        return fuelCost.calculateFuelCost(car, trip);
+    }
 }
+
+
