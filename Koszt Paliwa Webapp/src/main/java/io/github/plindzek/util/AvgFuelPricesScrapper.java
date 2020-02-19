@@ -17,7 +17,7 @@ public class AvgFuelPricesScrapper {
     /**
      * download site with actual fuel prices
      */
-    static Document getAutocentrum() {
+    public static Document getAutocentrum() {
         try {
             doc = Jsoup.connect("https://www.autocentrum.pl/paliwa/ceny-paliw/")
                     .timeout(3000)
