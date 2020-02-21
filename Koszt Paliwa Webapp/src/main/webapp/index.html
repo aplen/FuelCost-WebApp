@@ -18,7 +18,7 @@ integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr
 </head>
 
 <body>
-<main style="width: 40%; margin: 0 auto">
+<main style="width: 40%; margin: auto">
  <div id="welcome" style="text-align: center">
         <h1>Introduce yourself</h1>
     </div>
@@ -30,31 +30,55 @@ integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr
 	
 	 <form id="carForm" class="pure-form" style="display: none; text-align: center">
         <br>
-            <input id="carText" class="pure-input-rounded pure-input-2-3" placeholder="car name">
-
+        <fieldset>
+            <input id="carName" class="pure-input-rounded pure-input-2-3" placeholder="car name" >
+            <div class="pure-input-rounded">
+              <label for="fuel">select fuel </label>
+              <select id="state" class="pure-input-1-1" >
+                <option value>PB</option>  
+                <option value>LPG/PB</option>
+                  <option value>ON</option>
+              </select>
+          </div>
+          
             <input id="pbOn100Km" class="pure-input-rounded pure-input-2-3" placeholder="PB consumption/100 km">
             <input id="lpgOn100Km" class="pure-input-rounded pure-input-2-3" placeholder="LPG consumption/100 km">
             <input id="onOn100Km" class="pure-input-rounded pure-input-2-3" placeholder="ON consumption/100 km">
-        </br><button id="addCar" class="pure-button pure-button-primary">save car</button>
+        </br>
+        <button id="addCar" class="pure-button pure-button-primary">add this car</button>
+        <button id="useCar" class="pure-button pure-button-primary">use this car</button>
+         
         </fieldset>
-         <fieldset>
-             <input id="kmOnPB" class="pure-input-rounded pure-input-2-3" placeholder="ile km na PB">
-             <input id="kmOnLPG" class="pure-input-rounded pure-input-2-3" placeholder="ile km na LPG">
-             <input id="kmOnON" class="pure-input-rounded pure-input-2-3" placeholder="ile km na ON">
-             </br><button id="aaa" class="pure-button pure-button-primary">wyczyść</button>
-         </fieldset>
-        <fieldset id="allCars"></fieldset>
+        
+        <fieldset id="allCars" 
+        ></fieldset>
+    </form>
+
+    <form id="mainForm" class="pure-form" style="display: none; text-align: center">
+      <fieldset id="avgPrices">
+        <button id="usePrices" class="pure-button pure-button-primary">use prices</button>
+      </fieldset>
+      <fieldset>
+        <input id="kmOnPB" class="pure-input-rounded pure-input-2-3" placeholder="ile km na PB" >
+        <input id="kmOnLPG" class="pure-input-rounded pure-input-2-3" placeholder="ile km na LPG">
+        <input id="kmOnON" class="pure-input-rounded pure-input-2-3" placeholder="ile km na ON">
+        <input id="pbPrice" class="pure-input-rounded pure-input-2-3" placeholder="cena PB">
+        <input id="lpgPrice" class="pure-input-rounded pure-input-2-3" placeholder="cena LPG">
+        <input id="onPrice" class="pure-input-rounded pure-input-2-3" placeholder="cena ON">
+        </br>
+        <button id="clear" class="pure-button pure-button-primary">wyczyść</button>
+        <button id="back" class="pure-button pure-button-primary">back</button>
+        <button id="count" class="pure-button pure-button-primary">count fuel cost</button>
+      </fieldset>
     </form>
 </main>
-
-
-
 <script>
+ 
   (function() {
     const API_URL = 'http://localhost:8080/api';
     const CAR_API_URL = `${API_URL}/cars`;
-
-    const carText = document.getElementById('carText');
+    const FUEL_API_URL = `${API_URL}/fuelcost`;
+    const carName = document.getElementById('carName');
 
     fetch(CAR_API_URL)
       .then(processOkResponse)
@@ -68,17 +92,25 @@ integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ text: carText.value })
+        body: JSON.stringify({ text: carName.value })
       })
         .then(processOkResponse)
         .then(createNewCar)
-        .then(() => carText.value = '')
+        .then(() => carName.value = '')
         .catch(console.warn);
     });
 
-
-//createNewCar({ id: 1, text: 'Opel mock', lpgPowered: true });
-//{"id":1,"name":"Opel Astra H","lpgPowered":true,"onOn100km":0.0,"lpgOn100Km":10.5,"pbOn100Km":8.0}
+    function activateOnSelect(){
+    var stat = document.getElementById('state').value;
+    stat.addEventListener('change', (event)=>{
+    if (stat = 'PB')  {
+      document.getElementById('lpgOn100Km').disabled=true;
+      document.getElementById('onOn100Km').disabled=true;
+      document.getElementById('pbOn100Km').disabled=false;}
+    })}
+    
+  
+//createNewCar {"id":1,"name":"Opel Astra H","lpgPowered":true,"onOn100km":0.0,"lpgOn100Km":10.5,"pbOn100Km":8.0}
 
     function createNewCar(car) {
       const label = document.createElement('label');
