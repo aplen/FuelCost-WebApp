@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package io.github.plindzek.car;
 
@@ -15,74 +15,92 @@ import java.util.Optional;
  */
 public class CarRepository {
 
-	List<Car> findAll() {
-		var session = HibernateUtil.getSessionFactory().openSession();
-		var transaction = session.beginTransaction();
-		var result = session.createQuery("from cars", Car.class).list();
+    List<Car> findAll() {
+        var session = HibernateUtil.getSessionFactory().openSession();
+        var transaction = session.beginTransaction();
+        var result = session.createQuery("from Car", Car.class).list();
 
-		transaction.commit();
-		session.close();
-		return (result);
-
-	}
-    Optional<Car> findById(Integer id) {
-
-	var session = HibernateUtil.getSessionFactory().openSession();
-	var transaction = session.beginTransaction();
-
-	var result = session.get(Car.class, id);
-	transaction.commit();
-	session.close();
-	return Optional.ofNullable(result);
+        transaction.commit();
+        session.close();
+        return (result);
 
     }
-	public Optional<Car> findByName(String name) {
 
-		var session = HibernateUtil.getSessionFactory().openSession();
-		var transaction = session.beginTransaction();
+    public Optional<Car> findById(Integer id) {
 
-		var result = session.get(Car.class, name);
-		transaction.commit();
-		session.close();
-		return Optional.ofNullable(result);
+        var session = HibernateUtil.getSessionFactory().openSession();
+        var transaction = session.beginTransaction();
 
-	}
-	 Car updateCar(Integer id, String newName) {
-		Car result = null;
-		var session = HibernateUtil.getSessionFactory().openSession();
-		var transaction = session.beginTransaction();
-		try {
-			result = session.get(Car.class, id);
-			result.setName(newName);
-			transaction.commit();
-		} catch (Exception e) {
-			transaction.rollback();
-		}
-		session.close();
-		return result;
-	}
+        var result = session.get(Car.class, id);
+        transaction.commit();
+        session.close();
+        return Optional.ofNullable(result);
 
+    }
 
+    public Optional<Car> findByName(String name) {
 
-	Car addCar(Car newCar) {
+        var session = HibernateUtil.getSessionFactory().openSession();
+        var transaction = session.beginTransaction();
 
-		var session = HibernateUtil.getSessionFactory().openSession();
-		var transaction = session.beginTransaction();
+        var result = session.get(Car.class, name);
+        transaction.commit();
+        session.close();
+        return Optional.ofNullable(result);
 
-		try {
-			session.persist("cars", newCar);
+    }
 
-			transaction.commit();
-
-		} catch (Exception e) {
-			transaction.rollback();
-		}
-		session.close();
-
-		return newCar;
-	}
+    Car updateCar(Integer id, String newName) {
+        Car result = null;
+        var session = HibernateUtil.getSessionFactory().openSession();
+        var transaction = session.beginTransaction();
+        try {
+            result = session.get(Car.class, id);
+            result.setName(newName);
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+        }
+        session.close();
+        return result;
+    }
 
 
-	void deleteCar(){}
+    Car addCar(Car newCar) {
+
+        var session = HibernateUtil.getSessionFactory().openSession();
+        var transaction = session.beginTransaction();
+
+        try {
+            session.persist("cars", newCar);
+
+            transaction.commit();
+
+        } catch (Exception e) {
+            transaction.rollback();
+        }
+        session.close();
+
+        return newCar;
+    }
+
+
+    boolean deleteCar(Integer id) {
+        var session = HibernateUtil.getSessionFactory().openSession();
+        var transaction = session.beginTransaction();
+        boolean result;
+        try {
+
+            var carToDelete = session.get(Car.class, id);
+            session.delete("cars", carToDelete);
+            transaction.commit();
+
+        } catch (Exception e) {
+            transaction.rollback();
+        }
+        session.close();
+        result = true;
+        return result;
+    }
 
 }
