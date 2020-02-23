@@ -1,5 +1,6 @@
 package io.github.plindzek.fuelcost;
 
+import io.github.plindzek.car.Car;
 import io.github.plindzek.car.CarRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,14 +60,21 @@ public class FuelCostServlet extends HttpServlet {
             resp.getWriter().println("wrong data format");
         }
 
-        var Car = repository.findByName(name);
+        String pathInfo = req.getPathInfo();
+        logger.info("Request got with path info  " + pathInfo);
+        try {
+            var id = Integer.valueOf(pathInfo.substring(1));
+            var car = repository.findById(id).orElse(null);
+            //TODO
+            double wynik = fuelCostService.calcCost(car, trip);
+            System.out.println(wynik);
+            resp.setContentType("text/html; charset=utf-8");
+            //resp.setContentType("application/json; charset=utf-8");
+            resp.getWriter().write((Double.toString(wynik)));
+        } catch (NumberFormatException|NullPointerException e) {
+            logger.info("Wrong path: " + pathInfo);
+        }
 
-
-        double wynik = fuelCostService.calcCost(car, trip);
-        System.out.println(wynik);
-        resp.setContentType("text/html; charset=utf-8");
-        //resp.setContentType("application/json; charset=utf-8");
-        resp.getWriter().write((Double.toString(wynik)));
     }
 }
 
