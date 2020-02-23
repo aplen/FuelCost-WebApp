@@ -27,7 +27,7 @@ class HelloService {
 	this(new LangRepository());
     }
 
-    HelloService(LangRepository langRepository) {
+    HelloService(LangRepository repository) {
 	this.repository = repository;
     }
 
