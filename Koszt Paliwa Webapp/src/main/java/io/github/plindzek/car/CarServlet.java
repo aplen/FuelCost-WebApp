@@ -1,7 +1,6 @@
 package io.github.plindzek.car;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.plindzek.lang.LangService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +24,7 @@ public class CarServlet extends HttpServlet {
      * define references needed to handle response (eg. service, mapper or
      * repository)
      */
-    private CarRepository service;
+    private CarRepository repository;
     private ObjectMapper mapper;
 
     /*
@@ -35,8 +34,8 @@ public class CarServlet extends HttpServlet {
         this(new CarRepository(), new ObjectMapper());
     }
 
-    CarServlet(CarRepository service, ObjectMapper mapper) {
-        this.service = service;
+    CarServlet(CarRepository repository, ObjectMapper mapper) {
+        this.repository = repository;
         this.mapper = mapper;
     }
 
@@ -50,7 +49,7 @@ public class CarServlet extends HttpServlet {
          * what we want to do in response to given request
          */
         resp.setContentType("text/html; charset=utf-8");
-        mapper.writeValue(resp.getOutputStream(), service.findAll());
+        mapper.writeValue(resp.getOutputStream(), repository.findAll());
 
         // resp.getWriter().println(service.prepareGreeting(name, lang));
 
@@ -65,10 +64,32 @@ public class CarServlet extends HttpServlet {
 
         try {
             var id = Integer.valueOf(pathInfo.substring(1));
-            var car = service.updateCar(id, newName);
+            var car = repository.updateCar(id, newName);
             resp.setContentType("application/json;charset=UTF-8");
             mapper.writeValue(resp.getOutputStream(), car);
 
+        } catch (NumberFormatException e) {
+            logger.info("Wrong path: " + pathInfo);
+        }
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        var newCar = mapper.readValue(req.getInputStream(), Car.class);
+        resp.setContentType("application/json;charset=UTF-8");
+        mapper.writeValue(resp.getOutputStream(), repository.addCar(newCar));
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    //to check
+        String pathInfo = req.getPathInfo();
+        logger.info("Request to delete got with path info  " + pathInfo);
+        try {
+            var id = Integer.valueOf(pathInfo.substring(1));
+            resp.setContentType("text/html; charset=utf-8");
+            resp.getWriter().println(repository.deleteCar(id));
         } catch (NumberFormatException e) {
             logger.info("Wrong path: " + pathInfo);
         }
