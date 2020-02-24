@@ -80,11 +80,10 @@
             const FUEL_API_URL = `${API_URL}/fuelcost`;
             const fuelsList = document.getElementById('fuelsList');
             const carName = document.getElementById('carName');
-            const fuelOption = document.getElementById('fuelsList');
             const pbOn100Km = document.getElementById('pbOn100Km');
             const lpgOn100Km = document.getElementById('lpgOn100Km');
             const onOn100Km = document.getElementById('onOn100Km');
-            var confirmTxt = "Usuwasz pozycję ";
+            var confirmTxt = "Na pewno chcesz usunąć wybrana pozycję? ";
             fuelsList.addEventListener("change", fuelFieldsDisable);
 
             fetch(CAR_API_URL)
@@ -124,36 +123,34 @@
 
                 const label = document.createElement('label');
                 label.classList.add('pure-checkbox');
-                var deleteButton = document.createElement('BUTTON');
-                deleteButton.id = `${car.id}`;
 
+                var deleteButton = document.createElement('button');
                 deleteButton.classList.add('pure-button-primary');
                 var text = document.createTextNode("delete car");
                 deleteButton.appendChild(text);
                 deleteButton.addEventListener('click', (event) => {
                     event.preventDefault();
-                    var id = deleteButton.id;
 
-                    if (confirm(confirmTxt + deleteButton.id + '?')) {
+                    if (confirm(confirmTxt)) {
 
-                        fetch(`${CAR_API_URL}/` + id, {
+                        fetch(`${CAR_API_URL}/${car.id}`, {
                                 method: 'DELETE'
                             })
                             .then(processOkResponse)
+                            .then(label.innerHTML = "")
+                            .catch(console.warn);
 
-                        .catch(console.warn);
                     }
+
                 });
 
 
                 var useButton = document.createElement('BUTTON');
-                useButton.id = `${car.id}`;
                 useButton.classList.add('pure-button-primary');
                 var text1 = document.createTextNode("use car");
                 useButton.appendChild(text1);
                 var editButton = document.createElement('BUTTON');
                 editButton.classList.add('pure-button-primary');
-                editButton.id = `${car.id}`;
                 var text2 = document.createTextNode("edit car");
                 editButton.appendChild(text2);
                 var br = document.createElement("br");
