@@ -57,9 +57,14 @@
 
         <form id="mainForm" class="pure-form" style="display: none; text-align: center">
             <fieldset id="avgPrices">
-                <button id="usePrices" class="pure-button pure-button-primary">use prices</button>
+
+
+                <button id="refreshPrices" class="pure-button pure-button-primary">refresh prices</button>
             </fieldset>
+
             <fieldset>
+                <div id="chosenCar"></div>
+                </br>
                 <input id="kmOnPb" class="pure-input-rounded pure-input-2-3" placeholder="ile km na PB">
                 <input id="kmOnLpg" class="pure-input-rounded pure-input-2-3" placeholder="ile km na LPG">
                 <input id="kmOnOn" class="pure-input-rounded pure-input-2-3" placeholder="ile km na ON">
@@ -79,6 +84,7 @@
             const LANG_API_URL = `${API_URL}/langs`;
             const CAR_API_URL = `${API_URL}/cars`;
             const FUEL_API_URL = `${API_URL}/fuelcost`;
+            const PRICE_API_URL = `${API_URL}/prices`;
 
             const fuelsList = document.getElementById('fuelsList');
             const carName = document.getElementById('carName');
@@ -94,6 +100,36 @@
             const onPrice = document.getElementById('onPrice');
 
             var confirmTxt = "Na pewno chcesz usunąć wybrana pozycję? ";
+
+            getActualPrices();
+
+            function getActualPrices() {
+                document.getElementById('refreshPrices').addEventListener('click', (event) => {
+                    event.preventDefault();
+
+                    fetch(`${PRICE_API_URL}`)
+                        .then(processOkResponse)
+
+                    .then(resp => {
+                        //document.getElementById('priceLabel').innerHTML = "Aktualne ceny: " + JSON.stringify(resp);
+                        const cenka = document.createElement('label');
+                        cenka.classList.add('pure-checkbox');
+                        pricesMap = new Map(Object.entries(resp));
+                        pricesMap.forEach(element => {
+                            cenka.appendChild(document.createTextNode(element));
+                            cenka.appendChild(document.createTextNode('-'));
+                            document.getElementById('avgPrices').appendChild(cenka);
+                        });
+
+                    })
+
+
+
+                    ;
+                })
+            }
+
+
 
             initWelcomeForm();
 
@@ -150,34 +186,53 @@
                     onOn100Km.value = "";
                     pbOn100Km.disabled = true;
                     pbOn100Km.value = "";
-                } else {
-                    if (fuelChosen == "ON") {
-                        lpgOn100Km.disabled = true;
-                        lpgOn100Km.value = '';
-                        onOn100Km.disabled = false;
-                        pbOn100Km.disabled = true;
-                        pbOn100Km.value = '';
+                } else if (fuelChosen == "ON") {
+                    lpgOn100Km.disabled = true;
+                    lpgOn100Km.value = '';
+                    onOn100Km.disabled = false;
+                    pbOn100Km.disabled = true;
+                    pbOn100Km.value = '';
 
-                    } else {
-                        if (fuelChosen == "PB") {
-                            lpgOn100Km.disabled = true;
-                            lpgOn100Km.value = '';
-                            onOn100Km.disabled = true;
-                            onOn100Km.value = '';
-                            pbOn100Km.disabled = false;
-                        } else {
-                            if (fuelChosen == "LPG/PB") {
-                                lpgOn100Km.disabled = false;
-                                onOn100Km.disabled = true;
-                                onOn100Km.value = '';
-                                pbOn100Km.disabled = false;
-                            }
-                        }
-                    }
-
+                } else if (fuelChosen == "PB") {
+                    lpgOn100Km.disabled = true;
+                    lpgOn100Km.value = '';
+                    onOn100Km.disabled = true;
+                    onOn100Km.value = '';
+                    pbOn100Km.disabled = false;
+                } else if (fuelChosen == "LPG/PB") {
+                    lpgOn100Km.disabled = false;
+                    onOn100Km.disabled = true;
+                    onOn100Km.value = '';
+                    pbOn100Km.disabled = false;
                 }
-
             };
+
+            function removeKmAndPriceFields(car) {
+                if (car.lpgPowered) {
+                    kmOnOn.remove();
+                    onPrice.remove();
+                    kmOnPb.remove();
+                    pbPrice.remove();
+                } else if (car.pbPowered) {
+                    kmOnOn.remove();
+                    onPrice.remove();
+                    kmOnLpg.remove();
+                    lpgPrice.remove();
+                } else if (car.onPowered) {
+                    kmOnLpg.remove();
+                    lpgPrice.remove();
+                    kmOnPb.remove();
+                    pbPrice.remove();
+                } else {
+                    kmOnLpg.remove();
+                    lpgPrice.remove();
+                    kmOnPb.remove();
+                    pbPrice.remove();
+                    kmOnOn.remove();
+                    onPrice.remove();
+                    document.getElementById('welcome').innerHTML = `<h2>wybrany samochód nie ma wprowadzonego rodzaju paliwa</h2>`;
+                }
+            }
 
             fetch(CAR_API_URL)
                 .then(processOkResponse)
@@ -212,10 +267,13 @@
                 const label = document.createElement('label');
                 label.classList.add('pure-checkbox');
 
+                var useBtnTxt = document.createTextNode("use car");
+                var delBtnTxt = document.createTextNode("delete car");
+                var editBtnTxt = document.createTextNode("edit car");
+
                 var deleteButton = document.createElement('button');
                 deleteButton.classList.add('pure-button-primary');
-                var text = document.createTextNode("delete car");
-                deleteButton.appendChild(text);
+                deleteButton.appendChild(delBtnTxt);
                 deleteButton.addEventListener('click', (event) => {
                     event.preventDefault();
                     if (confirm(confirmTxt)) {
@@ -229,27 +287,38 @@
                 });
 
 
-                var useButton = document.createElement('BUTTON');
+                var useButton = document.createElement('button');
                 useButton.classList.add('pure-button-primary');
-                var text1 = document.createTextNode("use car");
-                useButton.appendChild(text1);
-                var editButton = document.createElement('BUTTON');
-                editButton.classList.add('pure-button-primary');
-                var text2 = document.createTextNode("edit car");
-                editButton.appendChild(text2);
-                var br = document.createElement("br");
+                useButton.appendChild(useBtnTxt);
+
+                useButton.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    document.getElementById('carForm').remove();
+                    document.getElementById('allCarsForm').remove();
+                    document.getElementById('chosenCar').appendChild(document.createTextNode(` ${car.name}` + ': ON:' + ` ${car.onOn100Km}` + 'l/100km | PB:' +
+                        ` ${car.pbOn100Km}` + 'l/100km | LPG:' + ` ${car.lpgOn100Km}` + 'l/100km'));
+                    document.getElementById('welcome').innerHTML = `<h2>wprowadź parametry trasy</h2>`;
+                    document.getElementById('mainForm').style.display = 'block';
+                    removeKmAndPriceFields(car);
+
+                });
+                //var editButton = document.createElement('button');
+                // editButton.classList.add('pure-button-primary');
+                // editButton.appendChild(editBtnTxt);
 
                 label.appendChild(document.createTextNode(` ${car.name}` + ': ON:' + ` ${car.onOn100Km}` + 'l/100km | PB:' +
                     ` ${car.pbOn100Km}` + 'l/100km | LPG:' + ` ${car.lpgOn100Km}` + 'l/100km'));
+                var br = document.createElement("br");
                 label.appendChild(br);
                 label.appendChild(useButton);
                 label.appendChild(document.createTextNode(' '));
-                label.appendChild(editButton);
-                label.appendChild(document.createTextNode(' '));
+                //label.appendChild(editButton);
+                //label.appendChild(document.createTextNode(' '));
                 label.appendChild(deleteButton);
 
                 document.getElementById('allCars').appendChild(label);
             }
+
 
             function processOkResponse(response = {}) {
                 if (response.ok) {
