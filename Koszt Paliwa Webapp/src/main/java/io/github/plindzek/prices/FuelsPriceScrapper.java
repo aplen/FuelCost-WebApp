@@ -1,7 +1,7 @@
 /**
  *
  */
-package io.github.plindzek.util;
+package io.github.plindzek.prices;
 
 import java.io.IOException;
 
@@ -12,7 +12,7 @@ import org.jsoup.nodes.Document;
  * @author Adam
  *
  */
-public class AvgFuelPricesScrapper {
+public class FuelsPriceScrapper {
 	static Document doc;
     /**
      * download site with actual fuel prices
@@ -30,41 +30,41 @@ public class AvgFuelPricesScrapper {
         return doc;
     }
 
-    public static Double getAvgLpgPrice() {
+    public static String getAvgLpgPrice() {
 
         var txtAvgLpgPrice = doc.getElementsByAttributeValueContaining("href",
                 "/paliwa/ceny-paliw/lpg/").select("div").text();
         var avgLpgPrice =
-                Double.parseDouble(txtAvgLpgPrice.charAt(0) + "." + txtAvgLpgPrice.charAt(2) + txtAvgLpgPrice.charAt(3));
+                txtAvgLpgPrice.charAt(0) + "." + txtAvgLpgPrice.charAt(2) + txtAvgLpgPrice.charAt(3);
         return avgLpgPrice;
 
     }
 
-    public static Double getAvgPbPrice() {
+    public static String getAvgPbPrice() {
 
         var txtAvgPbPrice = doc.getElementsByAttributeValueContaining("href",
                 "/paliwa/ceny-paliw/pb/").select("div").text();
 		var avgPbPrice =
-				Double.parseDouble(txtAvgPbPrice.charAt(0) + "." + txtAvgPbPrice.charAt(2) + txtAvgPbPrice.charAt(3));
+				txtAvgPbPrice.charAt(0) + "." + txtAvgPbPrice.charAt(2) + txtAvgPbPrice.charAt(3);
 		return avgPbPrice;
     }
 
-    public static Double getAvgPbPremiumPrice() {
+    public static String getAvgPbPremiumPrice() {
 
         var txtAvgPbPremiumPrice = doc.getElementsByAttributeValueContaining("href",
                 "/paliwa/ceny-paliw/pb-premium").select("div").text();
 		var avgPbPremiumPrice =
-				Double.parseDouble(txtAvgPbPremiumPrice.charAt(0) + "." + txtAvgPbPremiumPrice.charAt(2) + txtAvgPbPremiumPrice.charAt(3));
+				txtAvgPbPremiumPrice.charAt(0) + "." + txtAvgPbPremiumPrice.charAt(2) + txtAvgPbPremiumPrice.charAt(3);
         return avgPbPremiumPrice;
 
     }
 
-    public static Double getAvgOnPrice() {
+    public static String getAvgOnPrice() {
 
         var txtAvgOnPrice = doc.getElementsByAttributeValueContaining("href",
                 "/paliwa/ceny-paliw/on/").select("div").text();
 		var avgOnPrice =
-				Double.parseDouble(txtAvgOnPrice.charAt(0) + "." + txtAvgOnPrice.charAt(2) + txtAvgOnPrice.charAt(3));
+				txtAvgOnPrice.charAt(0) + "." + txtAvgOnPrice.charAt(2) + txtAvgOnPrice.charAt(3);
         return avgOnPrice;
 
     }

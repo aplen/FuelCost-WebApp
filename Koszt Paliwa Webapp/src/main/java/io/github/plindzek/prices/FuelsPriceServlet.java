@@ -1,0 +1,55 @@
+package io.github.plindzek.prices;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+
+    /**
+     * servlet at the localhost:8080/api/prices
+     * return actual fuel prices
+     *
+     * @author Adam
+     */
+
+    @WebServlet(displayName = "Fuels Price Servlet", urlPatterns = {"/api/prices"}, name = "Fuels Price Servlet")
+    public class FuelsPriceServlet extends HttpServlet {
+
+        private final Logger logger = LoggerFactory.getLogger(io.github.plindzek.lang.LangServlet.class);
+
+        /**
+         * define references needed to handle response (eg. service, mapper or
+         * repository)
+         */
+        private FuelsPriceRepository repository;
+        private ObjectMapper mapper;
+
+        /*
+         * servlet container needs it
+         */
+        public FuelsPriceServlet() {
+            this(new FuelsPriceRepository(), new ObjectMapper());
+        }
+
+        FuelsPriceServlet(FuelsPriceRepository repository, ObjectMapper mapper) {
+            this.repository = repository;
+            this.mapper = mapper;
+        }
+
+        @Override
+        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+            logger.info("Request got with parameters: " + req.getParameterMap());
+            resp.setContentType("application/json; charset=utf-8");
+
+            mapper.writeValue(resp.getOutputStream(), repository.getPrices());
+        }
+    }
+
