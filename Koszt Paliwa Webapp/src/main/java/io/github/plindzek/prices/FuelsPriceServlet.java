@@ -15,7 +15,6 @@ import java.io.IOException;
     /**
      * servlet at the localhost:8080/api/prices
      * return actual fuel prices
-     *
      * @author Adam
      */
 
@@ -24,10 +23,6 @@ import java.io.IOException;
 
         private final Logger logger = LoggerFactory.getLogger(io.github.plindzek.lang.LangServlet.class);
 
-        /**
-         * define references needed to handle response (eg. service, mapper or
-         * repository)
-         */
         private FuelsPriceRepository repository;
         private ObjectMapper mapper;
 
@@ -50,6 +45,7 @@ import java.io.IOException;
             resp.setContentType("application/json; charset=utf-8");
 
             mapper.writeValue(resp.getOutputStream(), repository.getPrices());
+
         }
     }
 
