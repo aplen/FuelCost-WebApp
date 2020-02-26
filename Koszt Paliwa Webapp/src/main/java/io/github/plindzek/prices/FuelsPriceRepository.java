@@ -1,18 +1,23 @@
 package io.github.plindzek.prices;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 class FuelsPriceRepository {
 
-    HashMap<String, String> prices;
+    List<String> prices;
 
-    HashMap<String, String> getPrices() {
-        prices = new HashMap<>();
-        prices.put("lpgPrice", FuelsPriceScrapper.getAvgLpgPrice());
-        prices.put("pbPrice", FuelsPriceScrapper.getAvgPbPrice());
-        prices.put("pbPremiumPrice", FuelsPriceScrapper.getAvgPbPrice());
-        prices.put("onPrice", FuelsPriceScrapper.getAvgOnPrice());
-System.out.println(prices);
+    List<String> getPrices() {
+        prices = new ArrayList<>();
+        prices.add(" Cena LPG: ");
+        prices.add(FuelsPriceScrapper.getAvgLpgPrice());
+        prices.add(", Cena PB: ");
+        prices.add(FuelsPriceScrapper.getAvgPbPrice());
+        prices.add(", Cena PB Premium: ");
+        prices.add(FuelsPriceScrapper.getAvgPbPremiumPrice());
+        prices.add(", Cena ON: ");
+        prices.add(FuelsPriceScrapper.getAvgOnPrice());
         return prices;
     }
 
