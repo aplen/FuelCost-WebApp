@@ -58,21 +58,28 @@
         <form id="mainForm" class="pure-form" style="display: none; text-align: center">
             <fieldset id="avgPrices">
 
+                <label id="prices"></label>
+                </br>
+                </br>
 
                 <button id="refreshPrices" class="pure-button pure-button-primary">refresh prices</button>
+                <div id="mainFormTitle" style="text-align: center">
+                    <h3>Fill fields with yourney length and fuel price:</h3>
+                </div>
+
             </fieldset>
 
             <fieldset>
                 <div id="chosenCar"></div>
                 </br>
-                <input id="kmOnPb" class="pure-input-rounded pure-input-2-3" placeholder="ile km na PB">
-                <input id="kmOnLpg" class="pure-input-rounded pure-input-2-3" placeholder="ile km na LPG">
-                <input id="kmOnOn" class="pure-input-rounded pure-input-2-3" placeholder="ile km na ON">
-                <input id="pbPrice" class="pure-input-rounded pure-input-2-3" placeholder="cena PB">
-                <input id="lpgPrice" class="pure-input-rounded pure-input-2-3" placeholder="cena LPG">
-                <input id="onPrice" class="pure-input-rounded pure-input-2-3" placeholder="cena ON">
+                <input id="kmOnPb" class="pure-input-rounded pure-input-2-3" placeholder="kilometers driven on PB">
+                <input id="kmOnLpg" class="pure-input-rounded pure-input-2-3" placeholder="kilometers driven on LPG">
+                <input id="kmOnOn" class="pure-input-rounded pure-input-2-3" placeholder="kilometers driven on ON">
+                <input id="pbPrice" class="pure-input-rounded pure-input-2-3" placeholder="PB price">
+                <input id="lpgPrice" class="pure-input-rounded pure-input-2-3" placeholder="LPG price">
+                <input id="onPrice" class="pure-input-rounded pure-input-2-3" placeholder="ON price">
                 </br>
-                <button id="clear" class="pure-button pure-button-primary">wyczyść</button>
+                <button id="clear" class="pure-button pure-button-primary">clear</button>
                 <button id="back" class="pure-button pure-button-primary">back</button>
                 <button id="count" class="pure-button pure-button-primary">count fuel cost</button>
             </fieldset>
@@ -99,37 +106,20 @@
             const lpgPrice = document.getElementById('lpgPrice');
             const onPrice = document.getElementById('onPrice');
 
-            var confirmTxt = "Na pewno chcesz usunąć wybrana pozycję? ";
+            var confirmTxt = "Are you sure to delete select position? ";
 
             getActualPrices();
 
             function getActualPrices() {
                 document.getElementById('refreshPrices').addEventListener('click', (event) => {
                     event.preventDefault();
-
                     fetch(`${PRICE_API_URL}`)
                         .then(processOkResponse)
-
-                    .then(resp => {
-                        //document.getElementById('priceLabel').innerHTML = "Aktualne ceny: " + JSON.stringify(resp);
-                        const cenka = document.createElement('label');
-                        cenka.classList.add('pure-checkbox');
-                        pricesMap = new Map(Object.entries(resp));
-                        pricesMap.forEach(element => {
-                            cenka.appendChild(document.createTextNode(element));
-                            cenka.appendChild(document.createTextNode('-'));
-                            document.getElementById('avgPrices').appendChild(cenka);
-                        });
-
-                    })
-
-
-
-                    ;
-                })
+                        .then(resp => resp.forEach(price => {
+                            document.getElementById('prices').appendChild(document.createTextNode(price));
+                        }))
+                });
             }
-
-
 
             initWelcomeForm();
 
@@ -165,7 +155,7 @@
                         .then(response => response.text())
                         .then((text) => {
                             document.getElementById('welcome').innerHTML = `
-                <h2>${text}</br>Wprowadź dane samochodu</br>lub wybierz z listy</h2>
+                <h2>${text}</br>Enter car data</br>or choose from list</h2>
             `;
                             welcomeForm.remove();
                             document.getElementById('carForm').style.display = 'block';
@@ -230,7 +220,7 @@
                     pbPrice.remove();
                     kmOnOn.remove();
                     onPrice.remove();
-                    document.getElementById('welcome').innerHTML = `<h2>wybrany samochód nie ma wprowadzonego rodzaju paliwa</h2>`;
+                    document.getElementById('welcome').innerHTML = `<h2>choosen car has no type of fuel set</h2>`;
                 }
             }
 
@@ -297,7 +287,7 @@
                     document.getElementById('allCarsForm').remove();
                     document.getElementById('chosenCar').appendChild(document.createTextNode(` ${car.name}` + ': ON:' + ` ${car.onOn100Km}` + 'l/100km | PB:' +
                         ` ${car.pbOn100Km}` + 'l/100km | LPG:' + ` ${car.lpgOn100Km}` + 'l/100km'));
-                    document.getElementById('welcome').innerHTML = `<h2>wprowadź parametry trasy</h2>`;
+                    document.getElementById('welcome').innerHTML = `<h3>Actual prices:</h3>`;
                     document.getElementById('mainForm').style.display = 'block';
                     removeKmAndPriceFields(car);
 
