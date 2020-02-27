@@ -15,58 +15,52 @@ import org.eclipse.jetty.webapp.MetaInfConfiguration;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.eclipse.jetty.webapp.WebInfConfiguration;
 import org.eclipse.jetty.webapp.WebXmlConfiguration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 public class App {
     public static void main(String[] args) throws Exception {
-		FuelsPriceScrapper.getAutocentrum();
-	Logger logger = LoggerFactory.getLogger(App.class);
-	logger.info("Ten tekst wyswietli się w konsoli");
 
+        /** create and configure handler */
+        var webapp = new WebAppContext();
 
-	/** create and configure handler */
-	var webapp = new WebAppContext();
+        /**
+         * this line create servlet but without annotations handling we need
+         * annotations, so its off
+         * webapp.addServlet(HelloServlet.class, "/api/*");
+         */
 
-	/**
-	 * this line create servlet but without annotations handling we need
-	 * annotations, so its off
-	 * webapp.addServlet(HelloServlet.class, "/api/*");
-	 */
+        /**
+         * this line allow to change static files in webapp folder without server
+         * restart
+         */
+        webapp.setInitParameter("org.eclipse.jetty.servlet.Default.maxCachedFiles", "0");
 
-	/**
-	 * this line allow to change static files in webapp folder without server
-	 * restart
-	 */
-	webapp.setInitParameter("org.eclipse.jetty.servlet.Default.maxCachedFiles", "0");
+        webapp.setResourceBase("src/main/webapp");
+        webapp.setContextPath("/");
 
-	webapp.setResourceBase("src/main/webapp");
-	webapp.setContextPath("/");
+        /**
+         * configuration from stackoverflow "webapp context configuration embedded
+         * servlet 3.1"
+         */
+        webapp.setConfigurations(new Configuration[]{new AnnotationConfiguration(), new WebInfConfiguration(),
+                new WebXmlConfiguration(), new MetaInfConfiguration(), new FragmentConfiguration(),
+                new EnvConfiguration(), new PlusConfiguration(), new JettyWebXmlConfiguration()});
+        webapp.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern", ".*/classes/.*");
 
-	/**
-	 * configuration from stackoverflow "webapp context configuration embedded
-	 * servlet 3.1"
-	 */
-	webapp.setConfigurations(new Configuration[] { new AnnotationConfiguration(), new WebInfConfiguration(),
-		new WebXmlConfiguration(), new MetaInfConfiguration(), new FragmentConfiguration(),
-		new EnvConfiguration(), new PlusConfiguration(), new JettyWebXmlConfiguration() });
-	webapp.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern", ".*/classes/.*");
+        var server = new Server(8080);
+        server.setHandler(webapp);
 
-	var server = new Server(8080);
-	server.setHandler(webapp);
+        /** closing Hibernate session when closing server */
+        server.addLifeCycleListener(new AbstractLifeCycle.AbstractLifeCycleListener() {
+            @Override
+            public void lifeCycleStopped(LifeCycle event) {
+                HibernateUtil.close();
+            }
+        });
 
-	/** closing Hibernate session when closing server */
-	server.addLifeCycleListener(new AbstractLifeCycle.AbstractLifeCycleListener() {
-	    @Override
-	    public void lifeCycleStopped(LifeCycle event) {
-		HibernateUtil.close();
-	    }
-	});
+        FuelsPriceScrapper.getAutocentrum();
 
-	server.start();
-	server.join();
-
+        server.start();
+        server.join();
 
 
     }

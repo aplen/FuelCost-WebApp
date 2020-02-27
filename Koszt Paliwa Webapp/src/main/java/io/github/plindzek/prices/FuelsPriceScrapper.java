@@ -13,19 +13,22 @@ import org.jsoup.nodes.Document;
  *
  */
 public class FuelsPriceScrapper {
-	static Document doc;
+
+
+    static Document doc;
     /**
      * download site with actual fuel prices
+     * @return
      */
     public static Document getAutocentrum() {
         try {
+
             doc = Jsoup.connect("https://www.autocentrum.pl/paliwa/ceny-paliw/")
-                    .timeout(3000)
-                    .post();
+                    .timeout(5000)
+                    .get();
         } catch (IOException ole) {
 
             ole.printStackTrace();
-
         }
         return doc;
     }
@@ -44,17 +47,17 @@ public class FuelsPriceScrapper {
 
         var txtAvgPbPrice = doc.getElementsByAttributeValueContaining("href",
                 "/paliwa/ceny-paliw/pb/").select("div").text();
-		var avgPbPrice =
-				txtAvgPbPrice.charAt(0) + "." + txtAvgPbPrice.charAt(2) + txtAvgPbPrice.charAt(3);
-		return avgPbPrice;
+        var avgPbPrice =
+                txtAvgPbPrice.charAt(0) + "." + txtAvgPbPrice.charAt(2) + txtAvgPbPrice.charAt(3);
+        return avgPbPrice;
     }
 
     public static String getAvgPbPremiumPrice() {
 
         var txtAvgPbPremiumPrice = doc.getElementsByAttributeValueContaining("href",
                 "/paliwa/ceny-paliw/pb-premium").select("div").text();
-		var avgPbPremiumPrice =
-				txtAvgPbPremiumPrice.charAt(0) + "." + txtAvgPbPremiumPrice.charAt(2) + txtAvgPbPremiumPrice.charAt(3);
+        var avgPbPremiumPrice =
+                txtAvgPbPremiumPrice.charAt(0) + "." + txtAvgPbPremiumPrice.charAt(2) + txtAvgPbPremiumPrice.charAt(3);
         return avgPbPremiumPrice;
 
     }
@@ -63,8 +66,8 @@ public class FuelsPriceScrapper {
 
         var txtAvgOnPrice = doc.getElementsByAttributeValueContaining("href",
                 "/paliwa/ceny-paliw/on/").select("div").text();
-		var avgOnPrice =
-				txtAvgOnPrice.charAt(0) + "." + txtAvgOnPrice.charAt(2) + txtAvgOnPrice.charAt(3);
+        var avgOnPrice =
+                txtAvgOnPrice.charAt(0) + "." + txtAvgOnPrice.charAt(2) + txtAvgOnPrice.charAt(3);
         return avgOnPrice;
 
     }
