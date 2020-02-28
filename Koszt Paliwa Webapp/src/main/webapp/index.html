@@ -20,31 +20,29 @@
             <h2>Introduce yourself</h2>
         </div>
         <form id="welcomeForm" class="pure-form pure-g pure-form-aligned">
-            <input class="pure-input-rounded pure-u-1" name="name" placeholder="name">
+            <input class="pure-input-rounded pure-u-1" name="name" placeholder="Enter Your name">
             <fieldset id="langs" class="pure-u-1 pure-control-group">Loading...</fieldset>
             <button id="btn" class="pure-button pure-button-primary pure-u-1">Submit</button>
         </form>
 
         <form id="carForm" class="pure-form" style="display: none; text-align: center">
-            <br>
-            <fieldset>
-                <input id="carName" class="pure-input-rounded pure-input-2-3" placeholder="car name">
-                <div class="pure-input-rounded">
-                    <label for="selectFuel">select fuel </label>
-                    <select id="fuelsList" class="pure-input-1-1">
+            <input id="carName" class="pure-input-rounded pure-input-2-3" placeholder="car name">
+            <div class="pure-input-rounded">
+                <label for="selectFuel">select fuel </label>
+                <select id="fuelsList" autocomplete="off" class="pure-input-1-1">
                 <option selected='selected' value=''></option>
                 <option value='PB'>PB</option>  
                 <option value='LPG/PB'>LPG/PB</option>
                   <option value='ON'>ON</option>
               </select>
-                </div>
+            </div>
 
-                <input id="pbOn100Km" class="pure-input-rounded pure-input-2-3" placeholder="PB consumption/100 km">
-                <input id="lpgOn100Km" class="pure-input-rounded pure-input-2-3" placeholder="LPG consumption/100 km">
-                <input id="onOn100Km" class="pure-input-rounded pure-input-2-3" placeholder="ON consumption/100 km">
-                </br>
-                </br>
-                <button id="addCar" class="pure-button pure-button-primary">save car</button>
+            <input id="pbOn100Km" class="pure-input-rounded pure-input-2-3" placeholder="PB consumption l/100km">
+            <input id="lpgOn100Km" class="pure-input-rounded pure-input-2-3" placeholder="LPG consumption l/100km">
+            <input id="onOn100Km" class="pure-input-rounded pure-input-2-3" placeholder="ON consumption l/100km">
+            </br>
+            </br>
+            <button id="addCar" class="pure-button pure-button-primary">save car</button>
             </fieldset>
         </form>
         <form id="allCarsForm" class="pure-form" style="display: none; text-align: center">
@@ -79,9 +77,17 @@
                 <input id="lpgPrice" class="pure-input-rounded pure-input-2-3" placeholder="LPG price">
                 <input id="onPrice" class="pure-input-rounded pure-input-2-3" placeholder="ON price">
                 </br>
-                <button id="clear" class="pure-button pure-button-primary">clear</button>
-                <button id="back" class="pure-button pure-button-primary">back</button>
-                <button id="count" class="pure-button pure-button-primary">count fuel cost</button>
+                <button id="clearButton" class="pure-button pure-button-primary">clear fields</button>
+                <button id="caclulateButton" class="pure-button pure-button-primary">calculate fuel cost</button>
+                <div id="result" class="pure-g">
+                    <div class="pure-u-1-2">
+                        <p>section 1</p>
+                    </div>
+                    <div class="pure-u-1-2">
+                        <p>section 2</p>
+                    </div>
+
+                </div>
             </fieldset>
         </form>
     </main>
@@ -155,8 +161,7 @@
                         .then(response => response.text())
                         .then((text) => {
                             document.getElementById('welcome').innerHTML = `
-                <h2>${text}</br>Enter car data</br>or choose from list</h2>
-            `;
+                <h2>${text}</br></br>Enter car data or choose from list:</h2>`;
                             welcomeForm.remove();
                             document.getElementById('carForm').style.display = 'block';
                             document.getElementById('allCarsForm').style.display = 'initial';
@@ -290,11 +295,7 @@
                     document.getElementById('welcome').innerHTML = `<h3>Actual prices:</h3>`;
                     document.getElementById('mainForm').style.display = 'block';
                     removeKmAndPriceFields(car);
-
                 });
-                //var editButton = document.createElement('button');
-                // editButton.classList.add('pure-button-primary');
-                // editButton.appendChild(editBtnTxt);
 
                 label.appendChild(document.createTextNode(` ${car.name}` + ': ON:' + ` ${car.onOn100Km}` + 'l/100km | PB:' +
                     ` ${car.pbOn100Km}` + 'l/100km | LPG:' + ` ${car.lpgOn100Km}` + 'l/100km'));
@@ -302,12 +303,19 @@
                 label.appendChild(br);
                 label.appendChild(useButton);
                 label.appendChild(document.createTextNode(' '));
-                //label.appendChild(editButton);
-                //label.appendChild(document.createTextNode(' '));
                 label.appendChild(deleteButton);
-
                 document.getElementById('allCars').appendChild(label);
             }
+
+            document.getElementById('clearButton').addEventListener('click', (event) => {
+                event.preventDefault();
+                document.forms[0].reset();
+            });
+
+            document.getElementById('calculateButton').addEventListener('click', (event) => {
+                event.preventDefault();
+
+            });
 
 
             function processOkResponse(response = {}) {
