@@ -2,8 +2,36 @@ package io.github.plindzek.fuelcost;
 
 class Trip {
 
-    private double kmOnLpg, kmOnPb, kmOnOn;
+    private double kmOnLpg;
+    private double kmOnPb;
+    private double kmOnOn;
+    private double lpgPrice;
+    private double pbPrice;
+    private double onPrice;
 
+    double getLpgPrice() {
+        return lpgPrice;
+    }
+
+    void setLpgPrice(double lpgPrice) {
+        this.lpgPrice = lpgPrice;
+    }
+
+    double getPbPrice() {
+        return pbPrice;
+    }
+
+    void setPbPrice(double pbPrice) {
+        this.pbPrice = pbPrice;
+    }
+
+    double getOnPrice() {
+        return onPrice;
+    }
+
+    void setOnPrice(double onPrice) {
+        this.onPrice = onPrice;
+    }
 
     public double getKmOnLpg() {
         return kmOnLpg;
