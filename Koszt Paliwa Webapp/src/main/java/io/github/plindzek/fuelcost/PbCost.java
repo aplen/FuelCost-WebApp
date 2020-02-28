@@ -11,7 +11,7 @@ class PbCost implements FuelCost {
     @Override
     public double calculateFuelCost(Car car, Trip trip) {
 
-        return (Math.round((car.getPbOn100Km() * Double.parseDouble(FuelsPriceScrapper.getAvgPbPrice())* trip.getKmOnPb() / 100) * 100.0))
+        return (Math.round((car.getPbOn100Km() * trip.getPbPrice()* trip.getKmOnPb() / 100) * 100.0))
                 / 100.0;
 
     }
