@@ -82,7 +82,7 @@
                 <input id="onPrice" class="pure-input-rounded pure-input-2-3" placeholder="ON price">
                 </br>
                 <button id="clearButton" class="pure-button pure-button-primary">clear fields</button>
-                <button id="caclulateButton" class="pure-button pure-button-primary">calculate fuel cost</button>
+                <button id="calculateButton" class="pure-button pure-button-primary">calculate fuel cost</button>
             </fieldset>
         </form>
     </main>
@@ -309,8 +309,30 @@
 
             document.getElementById('calculateButton').addEventListener('click', (event) => {
                 event.preventDefault();
+                const finishForm = document.getElementById('inputLast');
+                const tripDataObj = {
 
+                    //TODO: przypisać prawidłowe zmienne
+                    kmOnLpgValue: finishForm.elements.kmOnLpg.value,
+                    pbOn100KmValue: finishForm.elements.pbOn100Km.value,
+                    onOn100KmValue: finishForm.elements.onOn100Km.value,
+                    lpgPriceValue: finishForm.elements.lpgPrice.value,
+                    pbPriceValue: finishForm.elements.pbPrice.value,
+                    onPriceValue: finishForm.elements.onPrice.value,
+
+                };
+                fetch(`${FUEL_API_URL}?${new URLSearchParams(tripDataObj)}`)
+                    .then(response => response.text())
+                    .then((text) => {
+                        document.getElementById('welcome').innerHTML = `
+                <h2>Wykonano obliczenia!</h2>`;
+                    })
+                    .catch(console.warn);
             });
+
+
+
+
 
             function showDate() {
                 const now = new Date();
