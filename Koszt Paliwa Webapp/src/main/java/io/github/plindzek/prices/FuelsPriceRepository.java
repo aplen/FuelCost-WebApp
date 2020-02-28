@@ -12,11 +12,11 @@ class FuelsPriceRepository {
         prices = new ArrayList<>();
         prices.add(" Cena LPG: ");
         prices.add(FuelsPriceScrapper.getAvgLpgPrice());
-        prices.add(", Cena PB: ");
+        prices.add(" Cena PB: ");
         prices.add(FuelsPriceScrapper.getAvgPbPrice());
-        prices.add(", Cena PB Premium: ");
+        prices.add(" Cena PB Premium: ");
         prices.add(FuelsPriceScrapper.getAvgPbPremiumPrice());
-        prices.add(", Cena ON: ");
+        prices.add(" Cena ON: ");
         prices.add(FuelsPriceScrapper.getAvgOnPrice());
         return prices;
     }
