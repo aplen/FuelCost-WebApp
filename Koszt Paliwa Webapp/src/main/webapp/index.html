@@ -1,10 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <title>Fuel cost application</title>
     <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+
 </head>
 
 <body style="background-image: url('images/1.jpg'); background-repeat: inherit; background-position: center;">
@@ -13,7 +15,7 @@
             <h2>Introduce yourself</h2>
         </div>
         <form id="welcomeForm" class="pure-form pure-g pure-form-aligned" style='width: 40%; margin: auto;'>
-            <input class="pure-input-rounded pure-u-1" name="name" placeholder="Enter Your name">
+            <input class="pure-input-rounded pure-u-1" name="name" placeholder="Enter Your name" autocomplete="off">
             <fieldset id="langs" class="pure-u-1 pure-control-group">Loading...</fieldset>
             <button id="btn" class="pure-button pure-button-primary pure-u-1">Submit</button>
         </form>
@@ -22,9 +24,9 @@
         <div id="twoColumns" class="pure-g" style="width: initial; text-align: center;">
             <div class="pure-u-1-2">
                 <form id="carForm" class="pure-form" style="display: none; text-align: center">
-                    <input id="carName" class="pure-input-rounded pure-input-2-3" placeholder="car name">
+                    <input id="carName" class="pure-input-rounded pure-input-2-3" placeholder="car name" autocomplete="off">
                     <div class="pure-input-rounded">
-                        <label for="selectFuel">select fuel </label>
+                        <label id="selectFuel">select fuel </label>
                         <select id="fuelsList" autocomplete="off" class="pure-input-1-1">
                             <option selected='selected' value=''></option>
                             <option value='PB'>PB</option>  
@@ -33,9 +35,9 @@
                           </select>
                     </div>
 
-                    <input id="pbOn100Km" class="pure-input-rounded pure-input-2-3" placeholder="PB consumption l/100km">
-                    <input id="lpgOn100Km" class="pure-input-rounded pure-input-2-3" placeholder="LPG consumption l/100km">
-                    <input id="onOn100Km" class="pure-input-rounded pure-input-2-3" placeholder="ON consumption l/100km">
+                    <input id="pbOn100Km" class="pure-input-rounded pure-input-2-3" placeholder="PB consumption l/100km" disabled autocomplete="off">
+                    <input id="lpgOn100Km" class="pure-input-rounded pure-input-2-3" placeholder="LPG consumption l/100km" disabled autocomplete="off">
+                    <input id="onOn100Km" class="pure-input-rounded pure-input-2-3" placeholder="ON consumption l/100km" disabled autocomplete="off">
                     </br>
                     </br>
                     <button id="addCar" class="pure-button pure-button-primary">save car</button>
@@ -43,9 +45,9 @@
                 </form>
             </div>
             <div class="pure-u-1-2">
-                <form id="allCarsForm" class="pure-form" style="display: none; ">
+                <form id="allCarsForm" class="pure-form" style="display: none;">
                     <fieldset id="allCars" style="text-align: left;">
-                        <label id="carListTitle" style="text-align: left">
+                        <label id="carListTitle" style="text-align: left;">
                                 <h3>Saved cars list:</h3>
                             </label>
                     </fieldset>
@@ -63,295 +65,33 @@
                 </label>
                 </br>
                 </br>
-
                 <button id="showPrices" class="pure-button pure-button-primary">show prices</button>
-                <div id="mainFormTitle" style="text-align: center">
-                    <h3>Fill fields with yourney length and fuel price:</h3>
-                </div>
+
 
             </fieldset>
-
             <fieldset id='inputLast' style="width:40%; margin: auto; text-align: center;">
-                <div id="chosenCar"></div>
+                <label id="mainFormTitle" style="text-align: center">
+                    <h3>Choosen car:</h3>
+                </label>
+                <div id="chosenCar" style="height:40px; text-align:center; border-style:solid;"></div>
                 </br>
-                <input id="kmOnPb" class="pure-input-rounded pure-input-2-3" placeholder="kilometers driven on PB">
-                <input id="kmOnLpg" class="pure-input-rounded pure-input-2-3" placeholder="kilometers driven on LPG">
-                <input id="kmOnOn" class="pure-input-rounded pure-input-2-3" placeholder="kilometers driven on ON">
-                <input id="pbPrice" class="pure-input-rounded pure-input-2-3" placeholder="PB price">
-                <input id="lpgPrice" class="pure-input-rounded pure-input-2-3" placeholder="LPG price">
-                <input id="onPrice" class="pure-input-rounded pure-input-2-3" placeholder="ON price">
+                <label id='fillYourneyAndPriceTitle'> Fill fields with yourney length and fuel price: </label>
+                <input id="kmOnPb" class="pure-input-rounded pure-input-2-3" placeholder="kilometers driven on PB" disabled autocomplete="off">
+                <input id="kmOnLpg" class="pure-input-rounded pure-input-2-3" placeholder="kilometers driven on LPG" disabled autocomplete="off">
+                <input id="kmOnOn" class="pure-input-rounded pure-input-2-3" placeholder="kilometers driven on ON" disabled autocomplete="off">
+                <input id="pbPrice" class="pure-input-rounded pure-input-2-3" placeholder="PB price" disabled autocomplete="off">
+                <input id="lpgPrice" class="pure-input-rounded pure-input-2-3" placeholder="LPG price" disabled autocomplete="off">
+                <input id="onPrice" class="pure-input-rounded pure-input-2-3" placeholder="ON price" disabled autocomplete="off">
                 </br>
                 <button id="clearButton" class="pure-button pure-button-primary">clear fields</button>
                 <button id="calculateButton" class="pure-button pure-button-primary">calculate fuel cost</button>
+                <label id="result">
+                    
+                </label>
             </fieldset>
         </form>
     </main>
-    <script>
-        (function() {
-            const API_URL = 'http://localhost:8080/api';
-            const LANG_API_URL = `${API_URL}/langs`;
-            const CAR_API_URL = `${API_URL}/cars`;
-            const FUEL_API_URL = `${API_URL}/fuelcost`;
-            const PRICE_API_URL = `${API_URL}/prices`;
-
-            const fuelsList = document.getElementById('fuelsList');
-            const carName = document.getElementById('carName');
-            const pbOn100Km = document.getElementById('pbOn100Km');
-            const lpgOn100Km = document.getElementById('lpgOn100Km');
-            const onOn100Km = document.getElementById('onOn100Km');
-
-            const kmOnPb = document.getElementById('kmOnPb');
-            const kmOnLpg = document.getElementById('kmOnLpg');
-            const kmOnOn = document.getElementById('kmOnOn');
-            const pbPrice = document.getElementById('pbPrice');
-            const lpgPrice = document.getElementById('lpgPrice');
-            const onPrice = document.getElementById('onPrice');
-
-            var confirmTxt = "Are you sure to delete select position? ";
-
-            getActualPrices();
-
-            function getActualPrices() {
-                document.getElementById('showPrices').addEventListener('click', (event) => {
-                    event.preventDefault();
-                    fetch(`${PRICE_API_URL}`)
-                        .then(processOkResponse)
-                        .then(price => {
-                            showDate();
-                            document.getElementById('addPrices').innerHTML = price;
-                        })
-                });
-            }
-
-            initWelcomeForm();
-
-            function initWelcomeForm() {
-                const CODE_TO_EMOJI = {
-                    'pl': '🇵🇱',
-                    'en': '🇺🇸',
-                    'de': '🇩🇪'
-                };
-                fetch(`${LANG_API_URL}`)
-                    .then(processOkResponse)
-                    .then(langArr => {
-                        document.getElementById('langs').innerHTML = langArr.map(lang => `
-              <label class="pure-radio">
-                <input type="radio" name="lang" value="${lang.langId}">
-                ${CODE_TO_EMOJI[lang.langCode]}
-              </label>
-          `).join('\n');
-                        initWelcomeFormClick();
-                    });
-            }
-
-            function initWelcomeFormClick() {
-                const welcomeForm = document.getElementById('welcomeForm');
-
-                document.getElementById('btn').addEventListener('click', (event) => {
-                    event.preventDefault();
-                    const formObj = {
-                        name: welcomeForm.elements.name.value,
-                        lang: welcomeForm.elements.lang.value
-                    };
-                    fetch(`${API_URL}?${new URLSearchParams(formObj)}`)
-                        .then(response => response.text())
-                        .then((text) => {
-                            document.getElementById('welcome').innerHTML = `
-                <h2>${text}</br></br>Enter car data or choose from list:</h2>`;
-                            welcomeForm.remove();
-                            document.getElementById('carForm').style.display = 'block';
-                            document.getElementById('allCarsForm').style.display = 'initial';
-                        });
-                });
-            }
-
-            fuelsList.addEventListener("change", fuelFieldsDisable);
-            fuelFieldsDisable();
-
-            function fuelFieldsDisable() {
-                var fuelChosen = fuelsList.value;
-                if (fuelChosen == '') {
-                    lpgOn100Km.disabled = true;
-                    lpgOn100Km.value = '';
-                    onOn100Km.disabled = true;
-                    onOn100Km.value = "";
-                    pbOn100Km.disabled = true;
-                    pbOn100Km.value = "";
-                } else if (fuelChosen == "ON") {
-                    lpgOn100Km.disabled = true;
-                    lpgOn100Km.value = '';
-                    onOn100Km.disabled = false;
-                    pbOn100Km.disabled = true;
-                    pbOn100Km.value = '';
-
-                } else if (fuelChosen == "PB") {
-                    lpgOn100Km.disabled = true;
-                    lpgOn100Km.value = '';
-                    onOn100Km.disabled = true;
-                    onOn100Km.value = '';
-                    pbOn100Km.disabled = false;
-                } else if (fuelChosen == "LPG/PB") {
-                    lpgOn100Km.disabled = false;
-                    onOn100Km.disabled = true;
-                    onOn100Km.value = '';
-                    pbOn100Km.disabled = false;
-                }
-            };
-
-            function removeKmAndPriceFields(car) {
-                if (car.lpgPowered) {
-                    kmOnOn.remove();
-                    onPrice.remove();
-                    kmOnPb.remove();
-                    pbPrice.remove();
-                } else if (car.pbPowered) {
-                    kmOnOn.remove();
-                    onPrice.remove();
-                    kmOnLpg.remove();
-                    lpgPrice.remove();
-                } else if (car.onPowered) {
-                    kmOnLpg.remove();
-                    lpgPrice.remove();
-                    kmOnPb.remove();
-                    pbPrice.remove();
-                } else {
-                    kmOnLpg.remove();
-                    lpgPrice.remove();
-                    kmOnPb.remove();
-                    pbPrice.remove();
-                    kmOnOn.remove();
-                    onPrice.remove();
-                    document.getElementById('welcome').innerHTML = `<h2>choosen car has no type of fuel set</h2>`;
-                }
-            }
-
-            fetch(CAR_API_URL)
-                .then(processOkResponse)
-                .then(cars => cars.forEach(createNewCar));
-
-            document.getElementById('addCar').addEventListener('click', (event) => {
-                event.preventDefault();
-                fetch(CAR_API_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            name: carName.value,
-                            lpgPowered: !lpgOn100Km.disabled,
-                            pbPowered: !pbOn100Km.disabled,
-                            onPowered: !onOn100Km.disabled,
-                            onOn100Km: onOn100Km.value,
-                            lpgOn100Km: lpgOn100Km.value,
-                            pbOn100Km: pbOn100Km.value
-                        })
-                    })
-                    .then(processOkResponse)
-                    .then(createNewCar)
-                    .then(() => fuelsList.value = '', carName.value = '', pbOn100Km.value = '', lpgOn100Km.value = '', onOn100Km.value = '')
-                    .catch(console.warn);
-            });
-
-            function createNewCar(car) {
-
-                const label = document.createElement('label');
-                label.classList.add('pure-checkbox');
-
-                var useBtnTxt = document.createTextNode("use car");
-                var delBtnTxt = document.createTextNode("delete car");
-                var editBtnTxt = document.createTextNode("edit car");
-
-                var deleteButton = document.createElement('button');
-                deleteButton.classList.add('pure-button-primary');
-                deleteButton.appendChild(delBtnTxt);
-                deleteButton.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    if (confirm(confirmTxt)) {
-                        fetch(`${CAR_API_URL}/${car.id}`, {
-                                method: 'DELETE'
-                            })
-                            .then(processOkResponse)
-                            .then(label.remove())
-                            .catch(console.warn);
-                    }
-                });
-
-
-                var useButton = document.createElement('button');
-                useButton.classList.add('pure-button-primary');
-                useButton.appendChild(useBtnTxt);
-
-                useButton.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    document.getElementById('twoColumns').remove();
-                    document.getElementById('chosenCar').appendChild(document.createTextNode(` ${car.name}` + ': ON:' + ` ${car.onOn100Km}` + 'l/100km | PB:' +
-                        ` ${car.pbOn100Km}` + 'l/100km | LPG:' + ` ${car.lpgOn100Km}` + 'l/100km'));
-                    document.getElementById('welcome').innerHTML = `<h3>Actual Poland average fuel prices:</h3>`;
-                    document.getElementById('mainForm').style.display = 'initial';
-                    removeKmAndPriceFields(car);
-                });
-
-                label.appendChild(document.createTextNode(` ${car.name}` + ': ON:' + ` ${car.onOn100Km}` + 'l/100km | PB:' +
-                    ` ${car.pbOn100Km}` + 'l/100km | LPG:' + ` ${car.lpgOn100Km}` + 'l/100km'));
-                var br = document.createElement("br");
-                label.appendChild(br);
-                label.appendChild(useButton);
-                label.appendChild(document.createTextNode(' '));
-                label.appendChild(deleteButton);
-                document.getElementById('allCars').appendChild(label);
-            }
-
-            document.getElementById('clearButton').addEventListener('click', (event) => {
-                event.preventDefault();
-                document.forms[0].reset();
-            });
-
-            document.getElementById('calculateButton').addEventListener('click', (event) => {
-                event.preventDefault();
-                const finishForm = document.getElementById('inputLast');
-                const tripDataObj = {
-
-                    //TODO: przypisać prawidłowe zmienne
-                    kmOnLpgValue: finishForm.elements.kmOnLpg.value,
-                    pbOn100KmValue: finishForm.elements.pbOn100Km.value,
-                    onOn100KmValue: finishForm.elements.onOn100Km.value,
-                    lpgPriceValue: finishForm.elements.lpgPrice.value,
-                    pbPriceValue: finishForm.elements.pbPrice.value,
-                    onPriceValue: finishForm.elements.onPrice.value,
-
-                };
-                fetch(`${FUEL_API_URL}?${new URLSearchParams(tripDataObj)}`)
-                    .then(response => response.text())
-                    .then((text) => {
-                        document.getElementById('welcome').innerHTML = `
-                <h2>Wykonano obliczenia!</h2>`;
-                    })
-                    .catch(console.warn);
-            });
-
-
-
-
-
-            function showDate() {
-                const now = new Date();
-                const currentYear = now.getFullYear().toString();
-                const currentMonth = (now.getMonth() + 1).toString();
-                const currentDay = now.getDate().toString();
-                const formattedDate = `${currentDay.toString().padStart(2, '0')}-${currentMonth.padStart(2, '0')}-${currentYear.padStart(2, '0')}`;
-                document.getElementById('addDate').innerHTML = "Date: " + formattedDate + "; ";
-            }
-
-
-            function processOkResponse(response = {}) {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw new Error(`Status not 200 (${response.status})`);
-            }
-        })();
-    </script>
+    <script type="text/javascript" src="js/script.js"></script>
 </body>
 
 </html>
