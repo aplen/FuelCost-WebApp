@@ -3,7 +3,7 @@
   <groupId>io.github.plindzek</groupId>
   <artifactId>FuelCostWebapp</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
   <name>Fuel Cost</name>
   <description>my first webapp</description>
   
@@ -31,11 +31,7 @@
     <version>4.0.1</version>
     <scope>compile</scope>
 </dependency>
-<dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-plus</artifactId>
-            <version>9.4.26.v20200117</version>
-        </dependency>
+
         <dependency>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-annotations</artifactId>
