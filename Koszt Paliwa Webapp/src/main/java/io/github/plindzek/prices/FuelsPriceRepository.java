@@ -1,7 +1,6 @@
 package io.github.plindzek.prices;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 class FuelsPriceRepository {
