@@ -6,11 +6,6 @@ class FuelCostService {
 
     private FuelCost fuelCost;
 
-//    private CarRepository repository;
-//    FuelCostService(){this(new CarRepository());}
-//
-//    FuelCostService(CarRepository repository){this.repository=repository;}
-
     public double calcCost(Car car, Trip trip) {
         if (car.isOnPowered()) {
             fuelCost = new OnCost();
